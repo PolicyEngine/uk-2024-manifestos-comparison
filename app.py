@@ -4,6 +4,7 @@ from policyengine_uk import Microsimulation
 from policyengine_core.reforms import Reform
 import plotly.express as px
 import os
+from policyengine_core.charts import *
 
 
 baseline = Microsimulation()
@@ -160,17 +161,21 @@ lib_dem_reform = Reform.from_dict({
   }
 }, country_id="uk")
 
+@st.cache_resource
+def create_data():
+  # Combine results for comparison
+  stacked = pd.concat(
+      [
+          calculate_impacts(),
+          calculate_impacts(reform=conservative_reform),
+          calculate_impacts(reform=lib_dem_reform)
+      ],
+      keys=["Baseline", "Conservative", "Liberal Democrat"],
+  )
 
+  return stacked
 
-# Combine results for comparison
-stacked = pd.concat(
-    [
-        calculate_impacts(),
-        calculate_impacts(reform=conservative_reform),
-        calculate_impacts(reform=lib_dem_reform)
-    ],
-    keys=["Baseline", "Conservative", "Liberal Democrat"],
-)
+stacked = create_data()
 
 reform_types = ["Baseline", "Conservative", "Liberal Democrat"]
 
@@ -222,19 +227,18 @@ st.table(result_df)
 selected_metric = st.selectbox("Select a metric to display:", result_df.columns[1:])
 
 # Add a button to display the selected metric
-if st.button("Display Selected Metric"):
-    metric_data = result_df.set_index('Manifesto')[selected_metric]  # Change 'reform_type' to 'Manifesto'
+metric_data = result_df.set_index('Manifesto')[selected_metric]  # Change 'reform_type' to 'Manifesto'
 
-    fig = px.bar(
-        metric_data,
-        x=metric_data.index,
-        y=metric_data.values,
-        color=metric_data.index,
-        title=f"Impact of {selected_metric}",
-    ).update_layout(
-        yaxis_title="Value",
-        xaxis_title="Party",
-        showlegend=False,
-    )
+fig = px.bar(
+    metric_data,
+    x=metric_data.index,
+    y=metric_data.values,
+    color=metric_data.index,
+    title=f"Impact of {selected_metric}",
+).update_layout(
+    yaxis_title="Value",
+    xaxis_title="Party",
+    showlegend=False,
+)
 
-    st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(format_fig(fig), use_container_width=True)
