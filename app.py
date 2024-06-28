@@ -254,14 +254,13 @@ st.title("UK 2024 Manifestos Comparison")
 st.markdown("We will compare the impacts of the Conservative, Liberal Democrat and Labour party manifestos on society and households")
 
 # Display comparison table using the DataFrame
-st.subheader("Impact Comparison")
-st.write("Here is a comparison of the impacts of Conservative and Liberal Democrat manifestos compared to the baseline situation:")
+st.subheader("Societal Impact Comparison")
+st.write("Here is a comparison of the impacts of the Conservative, Liberal Democrat and Labour party manifestos:")
 
 # Load the decile impact data from the CSV file
 reform_data = pd.read_csv('decile_impact.csv')
 
 # Generate and display the decile impact chart
-st.subheader("Relative Income Change by Decile")
 fig_decile = px.line(
     reform_data,
     x='Decile',
@@ -285,6 +284,7 @@ st.plotly_chart(fig_decile, use_container_width=True)
 
 
 # Display the Dataframe in Table
+st.caption("**Total Impacts**")
 st.table(display_df)
 # Add a selectbox to choose a metric
 selected_metric = st.selectbox("Select a metric to display:", result_df.columns[1:])
@@ -324,7 +324,6 @@ fig = px.bar(
     x=metric_data.index,
     y=metric_data.values,
     color=metric_data.index,
-    title=f"{selected_metric_clean}",
     color_discrete_map={
         "Conservative": "#0087DC",
         "Liberal Democrat": "#FAA61A"
