@@ -117,6 +117,28 @@ lib_dem_reform = Reform.from_dict({
   }
 }, country_id="uk")
 
+labour_reform = Reform.from_dict({
+  "gov.contrib.labour.private_school_vat": {
+    "2025-01-01.2039-12-31": 0.2
+  },
+  "gov.contrib.policyengine.budget.corporate_incident_tax_change": {
+    "2024-01-01.2100-12-31": 2.6
+  },
+  "gov.contrib.policyengine.budget.education": {
+    "2024-01-01.2100-12-31": 1.3
+  },
+  "gov.contrib.policyengine.budget.high_income_incident_tax_change": {
+    "2024-01-01.2100-12-31": 3.2
+  },
+  "gov.contrib.policyengine.budget.nhs": {
+    "2024-01-01.2100-12-31": 2
+  },
+  "gov.contrib.policyengine.budget.other_public_spending": {
+    "2024-01-01.2100-12-31": 0.9
+  }
+}, country_id="uk")
+
+
 
 labour_reform = Reform.from_dict({
   "gov.contrib.labour.private_school_vat": {
