@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from policyengine_uk import Microsimulation
 from policyengine_core.reforms import Reform
 import plotly.express as px
 import os
@@ -9,9 +8,6 @@ import numpy as np
 
 from computation import computations, decile_impact
 
-
-
-baseline = Microsimulation()
 # Function to calculate difference in metrics between baseline and reform
 
 
