@@ -117,6 +117,28 @@ lib_dem_reform = Reform.from_dict({
   }
 }, country_id="uk")
 
+labour_reform = Reform.from_dict({
+  "gov.contrib.labour.private_school_vat": {
+    "2025-01-01.2039-12-31": 0.2
+  },
+  "gov.contrib.policyengine.budget.corporate_incident_tax_change": {
+    "2024-01-01.2100-12-31": 2.6
+  },
+  "gov.contrib.policyengine.budget.education": {
+    "2024-01-01.2100-12-31": 1.3
+  },
+  "gov.contrib.policyengine.budget.high_income_incident_tax_change": {
+    "2024-01-01.2100-12-31": 3.2
+  },
+  "gov.contrib.policyengine.budget.nhs": {
+    "2024-01-01.2100-12-31": 2
+  },
+  "gov.contrib.policyengine.budget.other_public_spending": {
+    "2024-01-01.2100-12-31": 0.9
+  }
+}, country_id="uk")
+
+
 
 baseline = Microsimulation()
 
@@ -124,7 +146,7 @@ def decile_impact():
     decile = baseline.calculate("household_income_decile", period=2028).clip(1, 10)
     net_income = baseline.calculate("household_net_income", period=2028)
     
-    reform_types = ["Conservative", "Liberal Democrat"]
+    reform_types = ["Conservative", "Labour", "Liberal Democrat"]
     reform_data = []
     
     for reform_type in reform_types:
@@ -132,6 +154,8 @@ def decile_impact():
             sim = Microsimulation(reform=conservative_reform)
         elif reform_type == "Liberal Democrat":
             sim = Microsimulation(reform=lib_dem_reform)
+        elif reform_type == "Labour":
+            sim = Microsimulation(reform=labour_reform)
         
         reformed_net_income = sim.calc("household_net_income", period=2028, map_to="household")
         income_change = net_income - reformed_net_income
