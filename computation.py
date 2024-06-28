@@ -266,6 +266,37 @@ def computations():
     result_df.to_csv('manifesto_impact.csv', index=False)
     return result_df
 
+def decile_impact():
+    decile = baseline.calculate("household_income_decile", period=2028).clip(1, 10)
+    net_income = baseline.calculate("household_net_income", period=2028)
+    
+    reform_types = ["Conservative", "Labour", "Liberal Democrat"]
+    reform_data = []
+    
+    for reform_type in reform_types:
+        if reform_type == "Conservative":
+            sim = Microsimulation(reform=conservative_reform)
+        elif reform_type == "Liberal Democrat":
+            sim = Microsimulation(reform=lib_dem_reform)
+        elif reform_type == "Labour":
+            sim = Microsimulation(reform=labour_reform)
+        
+        reformed_net_income = sim.calc("household_net_income", period=2028, map_to="household")
+        income_change = net_income - reformed_net_income
+        rel_income_change_by_decile = income_change.groupby(decile).sum() / net_income.groupby(decile).sum()
+        
+        for dec, change in rel_income_change_by_decile.items():
+            reform_data.append({
+                "Reform": reform_type,
+                "Decile": dec,
+                "Relative Income Change": -change * 100  # Invert and convert to percentage
+            })
+    
+    reform_data_df = pd.DataFrame(reform_data)
+    reform_data_df.to_csv('decile_impact.csv', index=False)
+    return reform_data_df
+
+
 
 if __name__ == "__main__":
     computations()
