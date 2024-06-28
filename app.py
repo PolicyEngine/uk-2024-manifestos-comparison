@@ -213,9 +213,9 @@ for reform_type in reform_types:
     rows.append(
         {
             "Manifesto": reform_type,
-            "Cost (in £M)": cost,
-            "Benefits (in £M)": benefits,
-            "Taxes (in £M)": taxes,
+            "Cost (in £B)": cost,
+            "Benefits (in £B)": benefits,
+            "Taxes (in £B)": taxes,
             "Poverty Impact (%)": -poverty_pct_diff,
             "Child Poverty Impact (%)": -child_poverty_pct_diff,
             "Adult Poverty Impact (%)": -adult_poverty_pct_diff,
@@ -230,8 +230,8 @@ result_df = pd.DataFrame(rows)
 display_df = result_df.copy()
 
 # Format the Cost, Benefits, and Taxes columns
-for column in ["Cost (in £M)", "Benefits (in £M)", "Taxes (in £M)"]:
-    display_df[column] = display_df[column].apply(lambda x: f'£{x / 1e6:,.2f}')
+for column in ["Cost (in £B)", "Benefits (in £B)", "Taxes (in £B)"]:
+    display_df[column] = display_df[column].apply(lambda x: f'£{x / 1e9:,.1f}')
 
 # Format the percentage columns
 percentage_columns = [
@@ -242,7 +242,7 @@ percentage_columns = [
     "Gini Index Impact (%)"
 ]
 for column in percentage_columns:
-    display_df[column] = display_df[column].apply(lambda x: f'{x:.2f}%')
+    display_df[column] = display_df[column].apply(lambda x: f'{x:.1f}')
 
 
 # Streamlit code for displaying the data
@@ -289,7 +289,7 @@ abs_max_value = max(abs(min_value), abs(max_value))
 
 # Create the Plotly line chart with equalized range
 fig = px.line(reform_data, x='Decile', y='Relative Income Change', color='Reform',
-              title="Relative Income Change by Decile for Each Reform (Inverted Impact)",
+              title="Relative Income Change by Decile for Each Reform",
               labels={"Relative Income Change": "Relative Income Change (%)"},
               color_discrete_map={
                   "Conservative": "#0087DC",
@@ -322,7 +322,7 @@ fig = px.bar(
         "Liberal Democrat": "#FAA61A"
     }
 ).update_layout(
-    yaxis_title="Value",
+    yaxis_title=f"{selected_metric}",
     xaxis_title="Party",
     showlegend=False,
 )
