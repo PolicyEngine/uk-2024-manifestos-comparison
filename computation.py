@@ -209,7 +209,6 @@ def calculate_impacts(reform=None):
     }, index=[0])
 
 
-@st.cache_resource
 def create_data():
     # Combine results for comparison
     stacked = pd.concat(
@@ -266,3 +265,8 @@ def computations():
     result_df = pd.DataFrame(rows)
     result_df.to_csv('manifesto_impact.csv', index=False)
     return result_df
+
+
+if __name__ == "__main__":
+    computations()
+    print("Computations completed successfully.")
