@@ -7,6 +7,9 @@ import os
 from policyengine_core.charts import *
 import numpy as np
 
+# Import the decile impact function from the separate file
+from decile_impact import decile_impact
+
 baseline = Microsimulation()
 # Function to calculate difference in metrics between baseline and reform
 
@@ -254,53 +257,32 @@ st.markdown("We will compare the societal and household impact of the Conservati
 st.subheader("Impact Comparison from Baseline")
 st.write("Here is a comparison of the impacts of Conservative and Liberal Democrat manifestos compared to the baseline:")
 
-def decile_impact():
-    decile = baseline.calculate("household_income_decile", period=2028).clip(1, 10)
-    net_income = baseline.calculate("household_net_income", period=2028)
-    
-    reform_data = []
-    
-    for reform_type in reform_types:
-        if reform_type == "Conservative":
-            sim = Microsimulation(reform=conservative_reform)
-        elif reform_type == "Liberal Democrat":
-            sim = Microsimulation(reform=lib_dem_reform)
-        
-        reformed_net_income = sim.calc("household_net_income", period=2028, map_to="household")
-        income_change = net_income - reformed_net_income
-        rel_income_change_by_decile = income_change.groupby(decile).sum() / net_income.groupby(decile).sum()
-        
-        for dec, change in rel_income_change_by_decile.items():
-            reform_data.append({
-                "Reform": reform_type,
-                "Decile": dec,
-                "Relative Income Change": -change * 100  # Invert and convert to percentage
-            })
-    
-    return pd.DataFrame(reform_data)
+# Load the decile impact data from the CSV file
+reform_data = pd.read_csv('decile_impact.csv')
 
-# Generate the reform data
-reform_data = decile_impact()
-
-# Find the min and max values to set the range
+# Generate and display the decile impact chart
+st.subheader("Relative Income Change by Decile for Each Reform")
+fig_decile = px.line(
+    reform_data,
+    x='Decile',
+    y='Relative Income Change',
+    color='Reform',
+    title="Relative Income Change by Decile for Each Reform",
+    labels={"Relative Income Change": "Relative Income Change (%)"},
+    color_discrete_map={
+        "Conservative": "#0087DC",
+        "Liberal Democrat": "#FAA61A"
+    }
+)
+# Update y-axis range
 min_value = reform_data['Relative Income Change'].min()
 max_value = reform_data['Relative Income Change'].max()
 abs_max_value = max(abs(min_value), abs(max_value))
+fig_decile.update_yaxes(range=[-abs_max_value, abs_max_value])
 
-# Create the Plotly line chart with equalized range
-fig = px.line(reform_data, x='Decile', y='Relative Income Change', color='Reform',
-              title="Relative Income Change by Decile for Each Reform",
-              labels={"Relative Income Change": "Relative Income Change (%)"},
-              color_discrete_map={
-                  "Conservative": "#0087DC",
-                  "Liberal Democrat": "#FAA61A"
-              })
+st.plotly_chart(fig_decile, use_container_width=True)
 
-# Update y-axis range
-fig.update_yaxes(range=[-abs_max_value, abs_max_value])
 
-# Display the chart in Streamlit
-st.plotly_chart(format_fig(fig), use_container_width=True)
 
 # Display the Dataframe in Table
 st.table(display_df)
