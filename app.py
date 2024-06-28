@@ -173,6 +173,27 @@ lib_dem_reform = Reform.from_dict({
   }
 }, country_id="uk")
 
+labour_reform = Reform.from_dict({
+  "gov.contrib.labour.private_school_vat": {
+    "2025-01-01.2039-12-31": 0.2
+  },
+  "gov.contrib.policyengine.budget.corporate_incident_tax_change": {
+    "2024-01-01.2100-12-31": 2.6
+  },
+  "gov.contrib.policyengine.budget.education": {
+    "2024-01-01.2100-12-31": 1.3
+  },
+  "gov.contrib.policyengine.budget.high_income_incident_tax_change": {
+    "2024-01-01.2100-12-31": 3.2
+  },
+  "gov.contrib.policyengine.budget.nhs": {
+    "2024-01-01.2100-12-31": 2
+  },
+  "gov.contrib.policyengine.budget.other_public_spending": {
+    "2024-01-01.2100-12-31": 0.9
+  }
+}, country_id="uk")
+
 @st.cache_resource
 def create_data():
     # Combine results for comparison
@@ -180,18 +201,17 @@ def create_data():
         [
             calculate_impacts(),
             calculate_impacts(reform=conservative_reform),
-            calculate_impacts(reform=lib_dem_reform)
+            calculate_impacts(reform=labour_reform),
+            calculate_impacts(reform=lib_dem_reform),
         ],
-        keys=["Baseline", "Conservative", "Liberal Democrat"],
+        keys=["Baseline", "Conservative", "Labour", "Liberal Democrat"],
     )
 
     return stacked
 
 stacked = create_data()
 
-stacked = create_data()
-
-reform_types = ["Baseline", "Conservative", "Liberal Democrat"]
+reform_types = ["Baseline", "Conservative", "Labour", "Liberal Democrat"]
 
 # Calculate percentage differences from baseline
 def pct_diff(a, b):
@@ -200,7 +220,7 @@ def pct_diff(a, b):
 def pct_diff_reform(var, reform_type):
     return pct_diff(stacked.xs(reform_type, level=0)[var].values[0], stacked.xs("Baseline", level=0)[var].values[0])
 
-reform_types = ["Conservative", "Liberal Democrat"]
+reform_types = ["Conservative", "Labour", "Liberal Democrat"]
 rows = []
 
 for reform_type in reform_types:
@@ -216,9 +236,9 @@ for reform_type in reform_types:
     rows.append(
         {
             "Manifesto": reform_type,
-            "Cost (in £B)": cost,
-            "Benefits (in £B)": benefits,
-            "Taxes (in £B)": taxes,
+            "Cost (£bn)": cost,
+            "Benefits (£bn)": benefits,
+            "Taxes (£bn)": taxes,
             "Poverty Impact (%)": -poverty_pct_diff,
             "Child Poverty Impact (%)": -child_poverty_pct_diff,
             "Adult Poverty Impact (%)": -adult_poverty_pct_diff,
@@ -233,8 +253,8 @@ result_df = pd.DataFrame(rows)
 display_df = result_df.copy()
 
 # Format the Cost, Benefits, and Taxes columns
-for column in ["Cost (in £B)", "Benefits (in £B)", "Taxes (in £B)"]:
-    display_df[column] = display_df[column].apply(lambda x: f'£{x / 1e9:,.1f}')
+for column in ["Cost (£bn)", "Benefits (£bn)", "Taxes (£bn)"]:
+    display_df[column] = display_df[column].apply(lambda x: f'{x / 1e9:,.1f}')
 
 # Format the percentage columns
 percentage_columns = [
