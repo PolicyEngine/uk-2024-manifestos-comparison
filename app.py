@@ -5,7 +5,7 @@ from policyengine_core.reforms import Reform
 import plotly.express as px
 import os
 from policyengine_core.charts import *
-
+import numpy as np
 
 baseline = Microsimulation()
 # Function to calculate difference in metrics between baseline and reform
@@ -21,6 +21,12 @@ def calculate_impacts(reform=None):
 
     # Calculate net income
     net_income = sim.calc("household_net_income", period=2028, map_to="household")
+
+    # Benefits 
+    benefits = sim.calc("household_benefits", period=2028, map_to="household")
+
+    # Taxes 
+    taxes = sim.calc("household_tax", period=2028, map_to="household")
 
     # Calculate poverty impacts
     poverty = sim.calc("in_poverty", period=2028, map_to="person")
@@ -41,12 +47,15 @@ def calculate_impacts(reform=None):
 
     return pd.DataFrame({
         "net_income": net_income.sum(),
+        "benefits": benefits.sum(),
+        "taxes": taxes.sum(),
         "poverty": poverty.mean(),
         "child_poverty": poverty[child == 1].mean(),
         "adult_poverty": poverty[adult == 1].mean(),
         "senior_poverty": poverty[senior == 1].mean(),
         "gini_index": personal_hh_equiv_income.gini()
     }, index=[0])
+
 
 # Conservative manifesto reform
 conservative_reform = Reform.from_dict({
@@ -104,7 +113,7 @@ conservative_reform = Reform.from_dict({
     "2029-01-01.2030-12-31": 0
   },
   "gov.hmrc.stamp_duty.residential.purchase.main.first.max": {
-    "2025-01-01.2039-12-31": 500000000
+    "2025-01-01.2039-12-31": np.inf
   },
   "gov.hmrc.stamp_duty.residential.purchase.main.first.rate[1].rate": {
     "2025-01-01.2039-12-31": 0
@@ -163,17 +172,19 @@ lib_dem_reform = Reform.from_dict({
 
 @st.cache_resource
 def create_data():
-  # Combine results for comparison
-  stacked = pd.concat(
-      [
-          calculate_impacts(),
-          calculate_impacts(reform=conservative_reform),
-          calculate_impacts(reform=lib_dem_reform)
-      ],
-      keys=["Baseline", "Conservative", "Liberal Democrat"],
-  )
+    # Combine results for comparison
+    stacked = pd.concat(
+        [
+            calculate_impacts(),
+            calculate_impacts(reform=conservative_reform),
+            calculate_impacts(reform=lib_dem_reform)
+        ],
+        keys=["Baseline", "Conservative", "Liberal Democrat"],
+    )
 
-  return stacked
+    return stacked
+
+stacked = create_data()
 
 stacked = create_data()
 
@@ -191,25 +202,48 @@ rows = []
 
 for reform_type in reform_types:
     cost = stacked.xs("Baseline", level=0)["net_income"].values[0] - stacked.xs(reform_type, level=0)["net_income"].values[0]
-    poverty_pct_diff = pct_diff_reform("poverty", reform_type)
-    child_poverty_pct_diff = pct_diff_reform("child_poverty", reform_type)
-    adult_poverty_pct_diff = pct_diff_reform("adult_poverty", reform_type)
-    senior_poverty_pct_diff = pct_diff_reform("senior_poverty", reform_type)
-    gini_index_pct_diff = pct_diff_reform("gini_index", reform_type)
+    benefits = (stacked.xs("Baseline", level=0)["benefits"].values[0] - stacked.xs(reform_type, level=0)["benefits"].values[0]) * -1
+    taxes = (stacked.xs("Baseline", level=0)["taxes"].values[0] - stacked.xs(reform_type, level=0)["taxes"].values[0]) * -1
+    poverty_pct_diff = pct_diff_reform("poverty", reform_type) * 100 * -1
+    child_poverty_pct_diff = pct_diff_reform("child_poverty", reform_type) * 100 * -1
+    adult_poverty_pct_diff = pct_diff_reform("adult_poverty", reform_type) * 100 * -1
+    senior_poverty_pct_diff = pct_diff_reform("senior_poverty", reform_type) * 100 * -1
+    gini_index_pct_diff = pct_diff_reform("gini_index", reform_type) * 100 * -1
 
     rows.append(
         {
             "Manifesto": reform_type,
-            "Cost (in £M)": cost / 1e6,
-            "Poverty Impact": -poverty_pct_diff,
-            "Child Poverty Impact": -child_poverty_pct_diff,
-            "Adult Poverty Impact": -adult_poverty_pct_diff,
-            "Senior Poverty Impact": -senior_poverty_pct_diff,
-            "Gini Index Impact": -gini_index_pct_diff,
+            "Cost (in £M)": cost,
+            "Benefits (in £M)": benefits,
+            "Taxes (in £M)": taxes,
+            "Poverty Impact (%)": -poverty_pct_diff,
+            "Child Poverty Impact (%)": -child_poverty_pct_diff,
+            "Adult Poverty Impact (%)": -adult_poverty_pct_diff,
+            "Senior Poverty Impact (%)": -senior_poverty_pct_diff,
+            "Gini Index Impact (%)": -gini_index_pct_diff,
         }
     )
 
 result_df = pd.DataFrame(rows)
+
+# Create a display version of the DataFrame
+display_df = result_df.copy()
+
+# Format the Cost, Benefits, and Taxes columns
+for column in ["Cost (in £M)", "Benefits (in £M)", "Taxes (in £M)"]:
+    display_df[column] = display_df[column].apply(lambda x: f'£{x / 1e6:,.2f}')
+
+# Format the percentage columns
+percentage_columns = [
+    "Poverty Impact (%)",
+    "Child Poverty Impact (%)",
+    "Adult Poverty Impact (%)",
+    "Senior Poverty Impact (%)",
+    "Gini Index Impact (%)"
+]
+for column in percentage_columns:
+    display_df[column] = display_df[column].apply(lambda x: f'{x:.2f}%')
+
 
 # Streamlit code for displaying the data
 st.title("Comparison of the UK 2024 Manifestos")
@@ -220,14 +254,62 @@ st.markdown("We will compare the societal and household impact of the Conservati
 st.subheader("Impact Comparison from Baseline")
 st.write("Here is a comparison of the impacts of Conservative and Liberal Democrat manifestos compared to the baseline:")
 
+def decile_impact():
+    decile = baseline.calculate("household_income_decile", period=2028).clip(1, 10)
+    net_income = baseline.calculate("household_net_income", period=2028)
+    
+    reform_data = []
+    
+    for reform_type in reform_types:
+        if reform_type == "Conservative":
+            sim = Microsimulation(reform=conservative_reform)
+        elif reform_type == "Liberal Democrat":
+            sim = Microsimulation(reform=lib_dem_reform)
+        
+        reformed_net_income = sim.calc("household_net_income", period=2028, map_to="household")
+        income_change = net_income - reformed_net_income
+        rel_income_change_by_decile = income_change.groupby(decile).sum() / net_income.groupby(decile).sum()
+        
+        for dec, change in rel_income_change_by_decile.items():
+            reform_data.append({
+                "Reform": reform_type,
+                "Decile": dec,
+                "Relative Income Change": -change * 100  # Invert and convert to percentage
+            })
+    
+    return pd.DataFrame(reform_data)
+
+# Generate the reform data
+reform_data = decile_impact()
+
+# Find the min and max values to set the range
+min_value = reform_data['Relative Income Change'].min()
+max_value = reform_data['Relative Income Change'].max()
+abs_max_value = max(abs(min_value), abs(max_value))
+
+# Create the Plotly line chart with equalized range
+fig = px.line(reform_data, x='Decile', y='Relative Income Change', color='Reform',
+              title="Relative Income Change by Decile for Each Reform (Inverted Impact)",
+              labels={"Relative Income Change": "Relative Income Change (%)"},
+              color_discrete_map={
+                  "Conservative": "#0087DC",
+                  "Liberal Democrat": "#FAA61A"
+              })
+
+# Update y-axis range
+fig.update_yaxes(range=[-abs_max_value, abs_max_value])
+
+# Display the chart in Streamlit
+st.plotly_chart(format_fig(fig), use_container_width=True)
+
 # Display the Dataframe in Table
-st.table(result_df)
+st.table(display_df)
 
 # Add a selectbox to choose a metric
 selected_metric = st.selectbox("Select a metric to display:", result_df.columns[1:])
 
 # Add a button to display the selected metric
-metric_data = result_df.set_index('Manifesto')[selected_metric]  # Change 'reform_type' to 'Manifesto'
+metric_data = result_df.set_index('Manifesto')[selected_metric]  
 
 fig = px.bar(
     metric_data,
@@ -235,10 +317,14 @@ fig = px.bar(
     y=metric_data.values,
     color=metric_data.index,
     title=f"Impact of {selected_metric}",
+    color_discrete_map={
+        "Conservative": "#0087DC",
+        "Liberal Democrat": "#FAA61A"
+    }
 ).update_layout(
     yaxis_title="Value",
     xaxis_title="Party",
     showlegend=False,
 )
 
-st.plotly_chart(format_fig(fig), use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
