@@ -10,6 +10,10 @@ import numpy as np
 
 # Function to calculate difference in metrics between baseline and reform
 
+LABOUR = "#E4003B"
+CONSERVATIVE = "#0087DC"
+LIB_DEM = "#FAA61A"
+
 
 results_df = pd.read_csv('manifesto_impact.csv')
 
@@ -30,12 +34,12 @@ percentage_columns = [
 for column in percentage_columns:
     display_df[column] = display_df[column].apply(lambda x: f'{x:.1f}')
 # Streamlit code for displaying the data
-st.title("UK 2024 Manifestos Comparison")
-st.markdown("We will compare the impacts of the Conservative, Liberal Democrat and Labour party manifestos on society and households")
+st.title("UK 2024 election manifestos")
+st.markdown("This interactive app compares the societal and household-level impacts of the Conservative, Labour and Liberal Democrat manifestos.")
 
 # Display comparison table using the DataFrame
-st.subheader("Societal Impact Comparison")
-st.write("Here is a comparison of the impacts of the Conservative, Liberal Democrat and Labour party manifestos:")
+st.subheader("Societal impacts")
+st.write("The chart below shows the impact by income decile of each manifesto policy, as a percentage of prior household disposable income.")
 
 # Load the decile impact data from the CSV file
 decile_data = pd.read_csv('decile_impact.csv')
@@ -46,24 +50,31 @@ fig_decile = px.line(
     x='Decile',
     y='Relative Income Change',
     color='Reform',
-    title="Relative Income Change by Decile for Each Reform",
-    labels={"Relative Income Change": "Relative Income Change (%)"},
+    title="Relative income change by decile",
+    labels={"Relative Income Change": "Relative income change (%)"},
     color_discrete_map={
-        "Conservative": "#0087DC",
-        "Liberal Democrat": "#FAA61A"
+        "Conservative": CONSERVATIVE,
+        "Labour": LABOUR,
+        "Liberal Democrat": LIB_DEM,
     }
+).update_traces(
+    mode='markers+lines',
+).update_layout(
+    yaxis_tickformat="+,.0f",
+    xaxis_tickvals=list(range(1, 11)),
 )
 # Update y-axis range
 min_value = decile_data['Relative Income Change'].min()
 max_value = decile_data['Relative Income Change'].max()
 abs_max_value = max(abs(min_value), abs(max_value))
 fig_decile.update_yaxes(range=[-abs_max_value, abs_max_value])
+fig = format_fig(fig_decile)
 st.plotly_chart(fig_decile, use_container_width=True)
-
 
 # Display the Dataframe in Table
 st.caption("**Total Impacts**")
-st.table(display_df)
+st.write("The table below shows the total impact of each manifesto policy on different societal metrics.")
+st.dataframe(display_df.set_index("Manifesto", drop=True).T, use_container_width=True)
 # Add a selectbox to choose a metric
 selected_metric = st.selectbox("Select a metric to display:", result_df.columns[1:])
 # Remove the word "Impact" and units in brackets if present
@@ -97,12 +108,15 @@ fig = px.bar(
     y=metric_data.values,
     color=metric_data.index,
     color_discrete_map={
-        "Conservative": "#0087DC",
-        "Liberal Democrat": "#FAA61A"
+        "Conservative": CONSERVATIVE,
+        "Liberal Democrat": LIB_DEM,
+        "Labour": LABOUR,
     }
 ).update_layout(
     yaxis_title=f"{selected_metric_clean}",
     xaxis_title="Party",
-    showlegend=False,
+    showlegend=True,
+    yaxis_tickformat="+,.0f",
 )
+fig = format_fig(fig)
 st.plotly_chart(fig, use_container_width=True)
