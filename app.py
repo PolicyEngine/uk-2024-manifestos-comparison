@@ -249,19 +249,19 @@ for column in percentage_columns:
 
 
 # Streamlit code for displaying the data
-st.title("Comparison of the UK 2024 Manifestos")
+st.title("UK 2024 Manifestos Comparison")
 
-st.markdown("We will compare the societal and household impact of the Conservative and Liberal Democrat party manifestos")
+st.markdown("We will compare the impacts of the Conservative, Liberal Democrat and Labour party manifestos on society and households")
 
 # Display comparison table using the DataFrame
-st.subheader("Impact Comparison from Baseline")
-st.write("Here is a comparison of the impacts of Conservative and Liberal Democrat manifestos compared to the baseline:")
+st.subheader("Impact Comparison")
+st.write("Here is a comparison of the impacts of Conservative and Liberal Democrat manifestos compared to the baseline situation:")
 
 # Load the decile impact data from the CSV file
 reform_data = pd.read_csv('decile_impact.csv')
 
 # Generate and display the decile impact chart
-st.subheader("Relative Income Change by Decile for Each Reform")
+st.subheader("Relative Income Change by Decile")
 fig_decile = px.line(
     reform_data,
     x='Decile',
