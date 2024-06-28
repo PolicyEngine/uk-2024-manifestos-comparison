@@ -304,25 +304,51 @@ st.plotly_chart(format_fig(fig), use_container_width=True)
 
 # Display the Dataframe in Table
 st.table(display_df)
-
 # Add a selectbox to choose a metric
 selected_metric = st.selectbox("Select a metric to display:", result_df.columns[1:])
 
+# Remove the word "Impact" and units in brackets if present
+selected_metric_clean = selected_metric.replace(" Impact", "").split(" (")[0]
+
 # Add a button to display the selected metric
-metric_data = result_df.set_index('Manifesto')[selected_metric]  
+metric_data = result_df.set_index('Manifesto')[selected_metric]
+
+# Determine which party has the largest impact for the selected metric
+if "Poverty" in selected_metric_clean or "Gini Index" in selected_metric_clean:
+    largest_impact_party = metric_data.idxmin()  # Find the smallest value for poverty and Gini index
+    largest_impact_value = metric_data.min()
+else:
+    largest_impact_party = metric_data.idxmax()  # Find the largest value for other metrics
+    largest_impact_value = metric_data.max()
+
+# Determine the year
+year = 2028
+
+# Add personalized messages
+if selected_metric_clean in ["Cost", "Taxes"]:
+    st.write(f"The **{largest_impact_party}** party would reduce **{selected_metric_clean.lower()}** the most in {year}.")
+elif selected_metric_clean == "Benefits":
+    st.write(f"The **{largest_impact_party}** party would increase benefits the most in {year}.")
+elif "Poverty" in selected_metric_clean or "Gini Index" in selected_metric_clean:
+    if largest_impact_value < 0:
+        st.write(f"The **{largest_impact_party}** party would decrease **{selected_metric_clean.lower()}** the most in {year}.")
+    else:
+        st.write(f"The **{largest_impact_party}** party would increase **{selected_metric_clean.lower()}** the least in {year}.")
+else:
+    st.write(f"The **{largest_impact_party}** party would decrease **{selected_metric_clean.lower()}** the most in {year}.")
 
 fig = px.bar(
     metric_data,
     x=metric_data.index,
     y=metric_data.values,
     color=metric_data.index,
-    title=f"Impact of {selected_metric}",
+    title=f"{selected_metric_clean}",
     color_discrete_map={
         "Conservative": "#0087DC",
         "Liberal Democrat": "#FAA61A"
     }
 ).update_layout(
-    yaxis_title=f"{selected_metric}",
+    yaxis_title=f"{selected_metric_clean}",
     xaxis_title="Party",
     showlegend=False,
 )
