@@ -346,6 +346,7 @@ fig = px.bar(
     color=metric_data.index,
     color_discrete_map={
         "Conservative": "#0087DC",
+        "Labour": "E4003B",
         "Liberal Democrat": "#FAA61A"
     }
 ).update_layout(
