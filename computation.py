@@ -261,6 +261,8 @@ def decile_impact():
 
 
 if __name__ == "__main__":
+    print("Computations")
     computations()
+    print("Deciles")
     decile_impact()
     print("Computations completed successfully.")

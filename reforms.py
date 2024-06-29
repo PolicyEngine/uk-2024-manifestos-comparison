@@ -200,10 +200,6 @@ lib_dem_reform_direct = Reform.from_dict(
 )
 
 labour_reform_direct = Reform.from_dict(
-    {
-        "gov.contrib.labour.private_school_vat": {
-            "2025-01-01.2039-12-31": 0.2
-        },
-    },
+    {},
     country_id="uk",
 )

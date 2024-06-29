@@ -10,11 +10,13 @@ LIB_DEM = "#FAA61A"
 
 def display_societal_impact(year, include_indirect_impacts):
     results_df = pd.read_csv("manifesto_impact.csv")
+    results_df = results_df[
+        results_df["Includes indirect impacts"] == include_indirect_impacts
+    ][results_df["Year"] == year].drop(
+        columns=["Year", "Includes indirect impacts"]
+    )
     decile_data = pd.read_csv("decile_impact.csv")
     result_df = pd.DataFrame(results_df).copy()
-    result_df = result_df[
-        result_df["Includes indirect impacts"] == include_indirect_impacts
-    ]
     # Create a display version of the DataFrame
     display_df = result_df.copy()
     # Format the Cost, Benefits, and Taxes columns
@@ -33,8 +35,8 @@ def display_societal_impact(year, include_indirect_impacts):
     for column in percentage_columns:
         display_df[column] = display_df[column].apply(lambda x: f"{x:.1f}")
 
-    display_df_year = display_df[display_df.Year == year]
-    result_df_year = result_df[result_df.Year == year]
+    display_df_year = display_df
+    result_df_year = result_df
     # Display comparison table using the DataFrame
     st.subheader("Societal Impacts")
     st.write(
@@ -83,9 +85,7 @@ def display_societal_impact(year, include_indirect_impacts):
         "The table below shows the total impact of each manifesto policy on different societal metrics."
     )
     st.dataframe(
-        display_df_year.drop(columns=["Year"])
-        .set_index("Manifesto", drop=True)
-        .T,
+        display_df_year.set_index("Manifesto", drop=True).T,
         use_container_width=True,
     )
     # Add a selectbox to choose a metric
