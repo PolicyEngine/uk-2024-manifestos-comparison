@@ -14,7 +14,7 @@ def display_household_impact():
 
 
     def get_income_input(person):
-        income_type = st.selectbox(f"Choose an income type for {person}:", ["Employment Income", "Self-Employment Income", "Pension Income", "State Pension Income"])
+        income_type = st.selectbox(f"Income type of {person}:", ["Employment Income", "Self-Employment Income", "Pension Income", "State Pension Income"])
         if income_type == "Employment Income":
             return st.number_input(f"{person}'s Employment Income", 0, 100000, 0)
         elif income_type == "Self-Employment Income":
@@ -26,10 +26,10 @@ def display_household_impact():
 
 
     # Show the age input for the head of the household
-    head_age = st.number_input("Age of the Head of Household", 0, 100, 0)
+    head_age = st.number_input("Age of the Head", 0, 100, 0)
 
     # Show care hours input for the head of the household
-    head_care_hours = st.number_input("Household Head's Weekly Care Hours", 0, 100, 0)
+    head_care_hours = st.number_input("Head's Weekly Care Hours", 0, 100, 0)
 
     # Show capital gains input for the head of the household
     head_capital_gains = st.number_input("Head's Capital Gains", 0, 100000, 0)
@@ -39,9 +39,9 @@ def display_household_impact():
 
     # Show the age input for the spouse if married is checked
     if married:
-        spouse_age = st.number_input("Age of the Spouse of the Household", 0, 100, 0)
-        spouse_care_hours = st.number_input("Household Spouse's Weekly Care Hours", 0, 100, 0)
-        spouse_capital_gains = st.number_input("Household Spouse's Capital Gains", 0, 100000, 0)
+        spouse_age = st.number_input("Age of the Spouse", 0, 100, 0)
+        spouse_care_hours = st.number_input("Spouse's Weekly Care Hours", 0, 100, 0)
+        spouse_capital_gains = st.number_input("Spouse's Capital Gains", 0, 100000, 0)
     else:
         spouse_age = None
         spouse_care_hours = None
