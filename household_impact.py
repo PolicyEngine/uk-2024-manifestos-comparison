@@ -5,7 +5,14 @@ import pandas as pd
 import numpy as np
 from computation import conservative_reform, lib_dem_reform, labour_reform
 from policyengine_uk.variables.household.demographic.household import TenureType
+import plotly.express as px
+from policyengine_core.charts import *
 
+
+# Define colors for the parties
+LABOUR = "#E4003B"
+CONSERVATIVE = "#0087DC"
+LIB_DEM = "#FAA61A"
 
 def display_household_impact():
     # Add a header and subheader
@@ -16,13 +23,13 @@ def display_household_impact():
     def get_income_input(person):
         income_type = st.selectbox(f"Income type of {person}:", ["Employment Income", "Self-Employment Income", "Pension Income", "State Pension Income"])
         if income_type == "Employment Income":
-            return st.number_input(f"{person}'s Employment Income", 0, 100000, 0)
+            return st.number_input(f"{person}'s Employment Income", 0, 1000000, 0)
         elif income_type == "Self-Employment Income":
-            return st.number_input(f"{person}'s Self-Employment Income", 0, 100000, 0)
+            return st.number_input(f"{person}'s Self-Employment Income", 0, 1000000, 0)
         elif income_type == "Pension Income":
-            return st.number_input(f"{person}'s Pension Income", 0, 100000, 0)
+            return st.number_input(f"{person}'s Pension Income", 0, 1000000, 0)
         elif income_type == "State Pension Income":
-            return st.number_input(f"{person}'s State Pension Income", 0, 100000, 0)
+            return st.number_input(f"{person}'s State Pension Income", 0, 1000000, 0)
 
 
     # Show the age input for the head of the household
@@ -32,7 +39,7 @@ def display_household_impact():
     head_care_hours = st.number_input("Head's Weekly Care Hours", 0, 100, 0)
 
     # Show capital gains input for the head of the household
-    head_capital_gains = st.number_input("Head's Capital Gains", 0, 100000, 0)
+    head_capital_gains = st.number_input("Head's Capital Gains", 0, 1000000, 0)
 
     # Inputs
     married = st.checkbox("Married")
@@ -41,7 +48,7 @@ def display_household_impact():
     if married:
         spouse_age = st.number_input("Age of the Spouse", 0, 100, 0)
         spouse_care_hours = st.number_input("Spouse's Weekly Care Hours", 0, 100, 0)
-        spouse_capital_gains = st.number_input("Spouse's Capital Gains", 0, 100000, 0)
+        spouse_capital_gains = st.number_input("Spouse's Capital Gains", 0, 1000000, 0)
     else:
         spouse_age = None
         spouse_care_hours = None
@@ -157,6 +164,14 @@ def display_household_impact():
         highest_net_income = max(differences, key=lambda x: differences[x]['Net Income Changes'])
         return highest_net_income
 
+
+    # Button to select which chart to display
+    selected_chart = st.selectbox(
+        "Select a chart to display:",
+        ["Net Income Changes", "Changes in Benefits", "Changes in Taxes"]
+    )
+
+
     # Inside the if st.button("Run Simulation") block:
     if st.button("Run Simulation"):
         situation = create_situation(head_income, head_age, head_care_hours, head_capital_gains, property_purchased, property_value, children_in_private_school, tenure_type, spouse_income=spouse_income, spouse_age=spouse_age, spouse_care_hours=spouse_care_hours, spouse_capital_gains=spouse_capital_gains, children_ages=children_ages)
@@ -166,13 +181,11 @@ def display_household_impact():
         labour = run_simulation(situation, labour_reform)
         lib_dem = run_simulation(situation, lib_dem_reform)
 
-
         differences = {
             "Conservative": calculate_differences(baseline, conservative),
             "Labour": calculate_differences(baseline, labour),
             "Liberal Democrat": calculate_differences(baseline, lib_dem)
         }
-
 
         party_with_highest_net_income_change = get_highest_net_income(differences)
         highest_net_income_diff = differences[party_with_highest_net_income_change]['Net Income Changes']
@@ -184,3 +197,24 @@ def display_household_impact():
 
         formatted_differences = pd.DataFrame(differences).T.applymap(format_currency)
         st.write(formatted_differences)
+
+        # Generate bar chart based on selected chart
+        chart_data = {party: diff[selected_chart] for party, diff in differences.items()}
+        fig = px.bar(
+            x=list(chart_data.keys()),
+            y=list(chart_data.values()),
+            labels={'x': 'Party', 'y': selected_chart},
+            color=list(chart_data.keys()),
+            color_discrete_map={
+                "Conservative": CONSERVATIVE,
+                "Liberal Democrat": LIB_DEM,
+                "Labour": LABOUR,
+            }
+        )
+        fig.update_layout(
+            yaxis_title=selected_chart,
+            xaxis_title="Party",
+            showlegend=False,
+            yaxis_tickformat="+,.0f",
+        )
+        st.plotly_chart(format_fig(fig), use_container_width=True)
