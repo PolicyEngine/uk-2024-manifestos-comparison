@@ -1,12 +1,11 @@
 import streamlit as st
 from enum import Enum
-from policyengine_uk import Simulation
 import pandas as pd
 import numpy as np
-from computation import conservative_reform, lib_dem_reform, labour_reform
-from policyengine_uk.variables.household.demographic.household import TenureType
+from reforms import conservative_reform, lib_dem_reform, labour_reform
 import plotly.express as px
 from policyengine_core.charts import *
+from policyengine_uk import Simulation
 
 
 # Define colors for the parties
@@ -14,207 +13,281 @@ LABOUR = "#E4003B"
 CONSERVATIVE = "#0087DC"
 LIB_DEM = "#FAA61A"
 
-def display_household_impact():
-    # Add a header and subheader
-    st.title("UK 2024 Manifestos Household Impact")
-    st.subheader("Compare the 2024 mMnifesto impacts of Conservative, Labour and Liberal Democrat party reforms on household net income, benefits, and taxes")
+names = ["The Conservatives", "Labour", "The Liberal Democrats"]
+reforms = [conservative_reform, labour_reform, lib_dem_reform]
 
 
-    def get_income_input(person):
-        income_type = st.selectbox(f"Income type of {person}:", ["Employment Income", "Self-Employment Income", "Pension Income", "State Pension Income"])
-        if income_type == "Employment Income":
-            return st.number_input(f"{person}'s Employment Income", 0, 1000000, 0)
-        elif income_type == "Self-Employment Income":
-            return st.number_input(f"{person}'s Self-Employment Income", 0, 1000000, 0)
-        elif income_type == "Pension Income":
-            return st.number_input(f"{person}'s Pension Income", 0, 1000000, 0)
-        elif income_type == "State Pension Income":
-            return st.number_input(f"{person}'s State Pension Income", 0, 1000000, 0)
+TAX_RISES = [
+    "income_tax",
+    "national_insurance",
+    "expected_sdlt",
+    "private_school_vat",
+    "capital_gains_tax",
+]
+BENEFIT_RISES = ["universal_credit"]
 
 
-    # Show the age input for the head of the household
-    head_age = st.number_input("Age of the Head", 0, 100, 0)
-
-    # Show care hours input for the head of the household
-    head_care_hours = st.number_input("Head's Weekly Care Hours", 0, 100, 0)
-
-    # Show capital gains input for the head of the household
-    head_capital_gains = st.number_input("Head's Capital Gains", 0, 1000000, 0)
-
-    # Inputs
-    married = st.checkbox("Married")
-
-    # Show the age input for the spouse if married is checked
-    if married:
-        spouse_age = st.number_input("Age of the Spouse", 0, 100, 0)
-        spouse_care_hours = st.number_input("Spouse's Weekly Care Hours", 0, 100, 0)
-        spouse_capital_gains = st.number_input("Spouse's Capital Gains", 0, 1000000, 0)
-    else:
-        spouse_age = None
-        spouse_care_hours = None
-        spouse_capital_gains = None
-
-    # Get income input for head and spouse
-    head_income = get_income_input("Head")
-    spouse_income = get_income_input("Spouse") if married else None
-
-    num_children = st.number_input("Number of Children", 0)
-
-    # Initialize children_ages and in_private_school dictionaries
-    children_ages = {}
-    children_in_private_school = {}
-
-    # Display age input for each child based on the number of children
-    for i in range(num_children):
-        children_ages[i+1] = st.number_input(f"Age of Child {i+1}", 0, 100, 0)
-        children_in_private_school[i+1] = st.checkbox(f"Is Child {i+1} in Private School?")
-
-
-    # Define the TenureType Enum as a constant
-    tenure_mapping = {
-        TenureType.RENT_FROM_COUNCIL.name: "Rented from Council",
-        TenureType.RENT_FROM_HA.name: "Rented from a Housing Association",
-        TenureType.RENT_PRIVATELY.name: "Rented privately",
-        TenureType.OWNED_OUTRIGHT.name: "Owned outright",
-        TenureType.OWNED_WITH_MORTGAGE.name: "Owned with a mortgage"
+def create_situation():
+    situation = {
+        "people": {"you": {}},
+        "households": {
+            "household": {
+                "members": ["you"],
+            },
+        },
     }
 
+    income_source_to_variable = {
+        "Employment": "employment_income",
+        "Self-employment": "self_employment_income",
+        "Pension": "pension_income",
+    }
 
+    age = st.number_input(
+        "How old are you?", min_value=0, max_value=100, value=30, key="age"
+    )
+    situation["people"]["you"]["age"] = age
 
-    tenure_type = st.selectbox("Tenure Type:", list(tenure_mapping.values()))
+    income_source = st.selectbox(
+        "What's your main source of income?",
+        ["None", "Employment", "Self-employment", "Pensions"],
+        index=1,
+        help="Enter the source which makes up the largest proportion of your income.",
+    )
+    if income_source != "None":
+        income = st.number_input(
+            "What's your annual income?",
+            min_value=0,
+            value=20000,
+            help="This is your income before tax, of your main source of income.",
+        )
+        situation["people"]["you"][
+            income_source_to_variable[income_source]
+        ] = income
 
-    property_purchased = st.checkbox("Property Purchased")
+    has_capital = st.checkbox("Do you have capital gains?")
+    if has_capital:
+        capital_gains = st.number_input(
+            "What's your annual capital gains?",
+            min_value=0,
+            max_value=1_000_000,
+            value=0,
+            help="This is your capital gains before tax.",
+        )
+        situation["people"]["you"]["capital_gains"] = capital_gains
 
-    if property_purchased:
-        property_value = st.number_input("Value of Purchased Property", 0, 1000000, 0)
+    joint = st.checkbox("Are you married or in a civil partnership?")
+    if joint:
+        situation["people"]["your partner"] = {}
+        situation["households"]["household"]["members"].append("your partner")
+
+        age_spouse = st.number_input(
+            "How old is your spouse?",
+            min_value=0,
+            max_value=100,
+            value=30,
+            key="age_spouse",
+        )
+        situation["people"]["your partner"]["age"] = age_spouse
+
+        income_source_spouse = st.selectbox(
+            "What's your spouse's main source of income?",
+            ["None", "Employment", "Self-employment", "Pension"],
+            key="spouse_income_source",
+            index=0,
+            help="Enter the source which makes up the largest proportion of your spouse's income.",
+        )
+
+        if income_source_spouse != "None":
+            income_spouse = st.number_input(
+                "What's your spouse's annual income?",
+                key="spouse_income",
+                min_value=0,
+                value=20000,
+                help="This is your spouse's income before tax, of their main source of income.",
+            )
+            situation["people"]["your partner"][
+                income_source_to_variable[income_source_spouse]
+            ] = income_spouse
     else:
-        property_value = None
+        income_spouse = 0
+
+    has_children = st.checkbox("Do you have children?")
+    if has_children:
+        num_children = st.number_input(
+            "How many children do you have?",
+            min_value=0,
+            value=1,
+            key="num_children",
+        )
+        situation["households"]["household"]["members"].extend(
+            [f"child {i+1}" for i in range(num_children)]
+        )
+        for i in range(num_children):
+            situation["people"][f"child {i+1}"] = {}
+            age_child = st.number_input(
+                f"How old is child {i+1}?",
+                min_value=0,
+                max_value=100,
+                value=10,
+                key=f"age_child {i}",
+            )
+            situation["people"][f"child {i+1}"]["age"] = age_child
+
+            private_school = st.checkbox(
+                f"Does child {i+1} attend a private school?",
+                help="We assume they pay average fees.",
+            )
+            situation["people"][f"child {i+1}"][
+                "attends_private_school"
+            ] = private_school
+
+    buying_first_home = st.checkbox(
+        "Will you buy your first home over the next four years?"
+    )
+    if buying_first_home:
+        value = st.number_input(
+            "What's the estimated value of the property?",
+            min_value=0,
+            value=200000,
+            key="property_value",
+        )
+        situation["households"]["household"][
+            "main_residential_property_purchased"
+        ] = value
+        situation["households"]["household"][
+            "main_residential_property_purchased_is_first_home"
+        ] = True
+
+    # Shift all to 2028
+
+    for entity_type in situation:
+        for entity in situation[entity_type]:
+            for key in situation[entity_type][entity]:
+                if key != "members":
+                    situation[entity_type][entity][key] = {
+                        2028: situation[entity_type][entity][key]
+                    }
+
+    return situation
 
 
-    def create_situation(head_income, head_age, head_care_hours, head_capital_gains, property_purchased, property_value, children_in_private_school, tenure_type, spouse_income=None, spouse_age=None, spouse_care_hours=None, spouse_capital_gains=None, children_ages=None):
-        """
-        Create a situation dictionary for the simulation.
-        """
-        # Reverse mapping from description to TenureType name
-        reverse_tenure_mapping = {v: k for k, v in tenure_mapping.items()}
-        selected_tenure_type = reverse_tenure_mapping[tenure_type]
+def create_party_summary(party, situation, reform, baseline):
+    simulation = Simulation(situation=situation, reform=reform)
+    simulation.default_calculation_period = 2028
 
-        if children_ages is None:
-            children_ages = {}
+    metrics = []
+    values = []
 
-
-        situation = {
-            "people": {
-                "you": {
-                    "age": {"2028": head_age},
-                    "employment_income": {"2028": head_income},
-                    "care_hours": {"2028": head_care_hours},
-                    "capital_gains": {"2028": head_capital_gains}
-                }
-            }
-        }
-        members = ["you"]
-        if spouse_income is not None:
-            situation["people"]["your partner"] = {
-                "age": {"2028": spouse_age},
-                "employment_income": {"2028": spouse_income},
-                "care_hours": {"2028": spouse_care_hours},
-                "capital_gains": {"2028": spouse_capital_gains}
-            }
-            members.append("your partner")
-        for key, value in children_ages.items():
-            situation["people"][f"child {key}"] = {
-                "age": value,
-                "attends_private_school": children_in_private_school[key],
-            }
-            members.append(f"child {key}")
-        situation["benunits"] = {"your benefit unit": {"members": members}}
-        situation["households"] = {
-            "your household": {
-                "members": members,
-                "main_residential_property_purchased_is_first_home": {"2028": property_purchased},
-                "main_residence_value": {"2028": property_value},
-                "tenure_type": {"2028": selected_tenure_type}
-            }
-        }
-        return situation
-
-    def run_simulation(situation, reform=None):
-        sim = Simulation(reform=reform, situation=situation)
-        net_income = sim.calc("household_net_income", period=2028)
-        benefits = sim.calc("household_benefits", period=2028)
-        tax = sim.calc("household_tax", period=2028)
-        return net_income, benefits, tax
-
-    # Define a function to calculate differences
-    def calculate_differences(base, reform):
-        return {
-            "Net Income Changes": reform[0].sum() - base[0].sum(),
-            "Changes in Benefits": reform[1].sum() - base[1].sum(),
-            "Changes in Taxes": reform[2].sum() - base[2].sum()
-        }
-
-    def format_currency(value):
-        if isinstance(value, (int, float, np.integer, np.floating)):
-            return f"£{value:,.1f}"
-        return value
-
-    # Function to find the party with the maximum net income difference
-    def get_highest_net_income(differences):
-        highest_net_income = max(differences, key=lambda x: differences[x]['Net Income Changes'])
-        return highest_net_income
-
-
-    # Button to select which chart to display
-    selected_chart = st.selectbox(
-        "Select a chart to display:",
-        ["Net Income Changes", "Changes in Benefits", "Changes in Taxes"]
+    diff = (
+        lambda variable: simulation.calculate(variable, 2028).sum()
+        - baseline.calculate(variable, 2028).sum()
     )
 
+    metrics.append("Child Benefit tax charge")
+    values.append(-diff("CB_HITC"))
 
-    # Inside the if st.button("Run Simulation") block:
-    if st.button("Run Simulation"):
-        situation = create_situation(head_income, head_age, head_care_hours, head_capital_gains, property_purchased, property_value, children_in_private_school, tenure_type, spouse_income=spouse_income, spouse_age=spouse_age, spouse_care_hours=spouse_care_hours, spouse_capital_gains=spouse_capital_gains, children_ages=children_ages)
-        
-        baseline = run_simulation(situation)
-        conservative = run_simulation(situation, conservative_reform)
-        labour = run_simulation(situation, labour_reform)
-        lib_dem = run_simulation(situation, lib_dem_reform)
+    metrics.append("Triple Lock Plus")
+    values.append(-(diff("income_tax") - diff("CB_HITC")))
 
-        differences = {
-            "Conservative": calculate_differences(baseline, conservative),
-            "Labour": calculate_differences(baseline, labour),
-            "Liberal Democrat": calculate_differences(baseline, lib_dem)
-        }
+    metrics.append("National Insurance")
+    values.append(-diff("national_insurance"))
 
-        party_with_highest_net_income_change = get_highest_net_income(differences)
-        highest_net_income_diff = differences[party_with_highest_net_income_change]['Net Income Changes']
+    metrics.append("Stamp Duty")
+    values.append(-diff("expected_sdlt"))
 
-        if highest_net_income_diff >= 0:
-            st.write(f"This household would experience the highest net income increase under the **{party_with_highest_net_income_change}** party's reform.")
-        else:
-            st.write(f"This household would experience the smallest net income loss under the **{party_with_highest_net_income_change}** party's reform.")
+    metrics.append("Private School VAT")
+    values.append(-diff("private_school_vat"))
 
-        formatted_differences = pd.DataFrame(differences).T.applymap(format_currency)
-        st.write(formatted_differences)
+    metrics.append("Capital Gains Tax")
+    values.append(-diff("capital_gains_tax"))
 
-        # Generate bar chart based on selected chart
-        chart_data = {party: diff[selected_chart] for party, diff in differences.items()}
-        fig = px.bar(
-            x=list(chart_data.keys()),
-            y=list(chart_data.values()),
-            labels={'x': 'Party', 'y': selected_chart},
-            color=list(chart_data.keys()),
-            color_discrete_map={
-                "Conservative": CONSERVATIVE,
-                "Liberal Democrat": LIB_DEM,
-                "Labour": LABOUR,
-            }
-        )
-        fig.update_layout(
-            yaxis_title=selected_chart,
-            xaxis_title="Party",
-            showlegend=False,
-            yaxis_tickformat="+,.0f",
-        )
-        st.plotly_chart(format_fig(fig), use_container_width=True)
+    metrics.append("Universal Credit")
+    values.append(diff("universal_credit"))
+
+    metrics.append("Net change excluding in-kind spending")
+    values.append(np.array(values).sum())
+
+    metrics.append("In-kind spending")
+    values.append(diff("household_net_income") - values[-1])
+
+    metrics.append("Net change")
+    values.append(diff("household_net_income"))
+
+    df = pd.DataFrame({"Metric": metrics, "Value": values})
+    df["Party"] = party
+    df.Value = df.Value.round(2)
+    return df
+
+
+def fmt(value):
+    return f"+£{value:,.0f}" if value >= 0 else f"-£{abs(value):,.0f}"
+
+
+def create_main_chart(df):
+    df["Text"] = df["Value"].apply(fmt)
+    fig = px.bar(
+        df.sort_values("Value", ascending=False),
+        x="Party",
+        y="Value",
+        text="Text",
+        color="Party",
+        color_discrete_map={
+            "The Conservatives": CONSERVATIVE,
+            "Labour": LABOUR,
+            "The Liberal Democrats": LIB_DEM,
+        },
+        animation_frame="Metric",
+    )
+
+    # only show the net change by default
+    fig.update_traces(
+        visible="legendonly",
+        selector=dict(name="Net change excluding in-kind spending"),
+    )
+
+    winning_party = (
+        df[df.Metric == "Net change"]
+        .sort_values("Value", ascending=False)
+        .iloc[0]["Party"]
+    )
+    party_color = (
+        CONSERVATIVE
+        if winning_party == "The Conservatives"
+        else (LABOUR if winning_party == "Labour" else LIB_DEM)
+    )
+
+    fig = format_fig(fig).update_layout(
+        showlegend=True,
+        title=f'The <span style="color: {party_color}">{winning_party}</span> would increase your net income the most',
+        yaxis_title="Net income change",
+    )
+
+    return fig
+
+
+def display_household_impact():
+    st.subheader("Household impact")
+
+    situation = create_situation()
+
+    with st.expander("See your situation"):
+        st.json(situation)
+
+    submit = st.button("Calculate impacts")
+    if submit:
+        baseline = Simulation(situation=situation)
+        dfs = []
+
+        with st.spinner("Calculating impacts..."):
+            for name, reform in zip(names, reforms):
+                dfs.append(
+                    create_party_summary(name, situation, reform, baseline)
+                )
+
+        df = pd.concat(dfs)
+
+        with st.expander("See breakdown"):
+            st.dataframe(df, use_container_width=True)
+
+        st.plotly_chart(create_main_chart(df), use_container_width=True)
