@@ -7,35 +7,44 @@ LABOUR = "#E4003B"
 CONSERVATIVES = "#0087DC"
 LIB_DEM = "#FAA61A"
 
-results_df = pd.read_csv("manifesto_impact.csv")
 
-result_df = pd.DataFrame(results_df)
-# Create a display version of the DataFrame
-display_df = result_df.copy()
-# Format the Cost, Benefits, and Taxes columns
-for column in ["Cost (£bn)", "Benefits (£bn)", "Taxes (£bn)"]:
-    display_df[column] = display_df[column].apply(lambda x: f"{x / 1e9:,.1f}")
-# Format the percentage columns
-percentage_columns = [
-    "Poverty Impact (%)",
-    "Child Poverty Impact (%)",
-    "Adult Poverty Impact (%)",
-    "Senior Poverty Impact (%)",
-    "Gini Index Impact (%)",
-]
-for column in percentage_columns:
-    display_df[column] = display_df[column].apply(lambda x: f"{x:.1f}")
+def display_societal_impact(year, include_indirect_impacts):
+    results_df = pd.read_csv("manifesto_impact.csv")
+    decile_data = pd.read_csv("decile_impact.csv")
+    result_df = pd.DataFrame(results_df).copy()
+    result_df = result_df[
+        result_df["Includes indirect impacts"] == include_indirect_impacts
+    ]
+    # Create a display version of the DataFrame
+    display_df = result_df.copy()
+    # Format the Cost, Benefits, and Taxes columns
+    for column in ["Cost (£bn)", "Benefits (£bn)", "Taxes (£bn)"]:
+        display_df[column] = display_df[column].apply(
+            lambda x: f"{x / 1e9:,.1f}"
+        )
+    # Format the percentage columns
+    percentage_columns = [
+        "Poverty Impact (%)",
+        "Child Poverty Impact (%)",
+        "Adult Poverty Impact (%)",
+        "Senior Poverty Impact (%)",
+        "Gini Index Impact (%)",
+    ]
+    for column in percentage_columns:
+        display_df[column] = display_df[column].apply(lambda x: f"{x:.1f}")
 
-
-def display_societal_impact():
+    display_df_year = display_df[display_df.Year == year]
+    result_df_year = result_df[result_df.Year == year]
     # Display comparison table using the DataFrame
     st.subheader("Societal Impacts")
     st.write(
         "The chart below shows the impact by income decile of each manifesto policy, as a percentage of prior household disposable income."
     )
 
-    # Load the decile impact data from the CSV file
-    decile_data = pd.read_csv("decile_impact.csv")
+    decile_data = decile_data.copy()
+    decile_data = decile_data[decile_data.Year == year][
+        decile_data["Includes indirect impacts"] == include_indirect_impacts
+    ]
 
     # Generate and display the decile impact chart
     fig_decile = (
@@ -48,7 +57,7 @@ def display_societal_impact():
             labels={"Relative Income Change": "Relative income change (%)"},
             color_discrete_map={
                 "Conservatives": CONSERVATIVES,
-                "Labour": LABOUR,
+                "Labour Party": LABOUR,
                 "Liberal Democrats": LIB_DEM,
             },
         )
@@ -74,19 +83,21 @@ def display_societal_impact():
         "The table below shows the total impact of each manifesto policy on different societal metrics."
     )
     st.dataframe(
-        display_df.set_index("Manifesto", drop=True).T,
+        display_df_year.drop(columns=["Year"])
+        .set_index("Manifesto", drop=True)
+        .T,
         use_container_width=True,
     )
     # Add a selectbox to choose a metric
     selected_metric = st.selectbox(
-        "Select a metric to display:", result_df.columns[1:]
+        "Select a metric to display:", result_df_year.columns[1:]
     )
     # Remove the word "Impact" and units in brackets if present
     selected_metric_clean = selected_metric.replace(" Impact", "").split(" (")[
         0
     ]
     # Add a button to display the selected metric
-    metric_data = result_df.set_index("Manifesto")[selected_metric]
+    metric_data = result_df_year.set_index("Manifesto")[selected_metric]
 
     if selected_metric_clean == "Cost":
         metric_data *= -1
@@ -115,8 +126,6 @@ def display_societal_impact():
     largest_impact_party = (
         f'<span style="color: {party_color}">{largest_impact_party}</span>'
     )
-    # Determine the year
-    year = 2028
     # Add personalized messages
     if selected_metric_clean == "Cost":
         title = f"The {largest_impact_party} would reduce the deficit the most in {year}"

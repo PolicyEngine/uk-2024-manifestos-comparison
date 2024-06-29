@@ -2,7 +2,7 @@ import streamlit as st
 from enum import Enum
 import pandas as pd
 import numpy as np
-from reforms import conservative_reform, lib_dem_reform, labour_reform
+from reforms import *
 import plotly.express as px
 from policyengine_core.charts import *
 from policyengine_uk import Simulation
@@ -14,7 +14,6 @@ CONSERVATIVE = "#0087DC"
 LIB_DEM = "#FAA61A"
 
 names = ["The Conservatives", "Labour", "The Liberal Democrats"]
-reforms = [conservative_reform, labour_reform, lib_dem_reform]
 
 
 TAX_RISES = [
@@ -27,7 +26,7 @@ TAX_RISES = [
 BENEFIT_RISES = ["universal_credit"]
 
 
-def create_situation():
+def create_situation(year):
     situation = {
         "people": {"you": {}},
         "households": {
@@ -65,10 +64,10 @@ def create_situation():
             income_source_to_variable[income_source]
         ] = income
 
-    has_capital = st.checkbox("Do you have capital gains?")
+    has_capital = st.checkbox("I have capital gains")
     if has_capital:
         capital_gains = st.number_input(
-            "What's your annual capital gains?",
+            "What's your annual capital gains income?",
             min_value=0,
             max_value=1_000_000,
             value=0,
@@ -76,7 +75,7 @@ def create_situation():
         )
         situation["people"]["you"]["capital_gains"] = capital_gains
 
-    joint = st.checkbox("Are you married or in a civil partnership?")
+    joint = st.checkbox("I am married or in a civil partnership")
     if joint:
         situation["people"]["your partner"] = {}
         situation["households"]["household"]["members"].append("your partner")
@@ -112,7 +111,7 @@ def create_situation():
     else:
         income_spouse = 0
 
-    has_children = st.checkbox("Do you have children?")
+    has_children = st.checkbox("I have children")
     if has_children:
         num_children = st.number_input(
             "How many children do you have?",
@@ -135,7 +134,7 @@ def create_situation():
             situation["people"][f"child {i+1}"]["age"] = age_child
 
             private_school = st.checkbox(
-                f"Does child {i+1} attend a private school?",
+                f"Child {i+1} attends private school",
                 help="We assume they pay average fees.",
             )
             situation["people"][f"child {i+1}"][
@@ -143,11 +142,11 @@ def create_situation():
             ] = private_school
 
     buying_first_home = st.checkbox(
-        "Will you buy your first home over the next four years?"
+        "I will buy my first home over the next four years"
     )
     if buying_first_home:
         value = st.number_input(
-            "What's the estimated value of the property?",
+            "What's the estimated value of the property you will buy?",
             min_value=0,
             value=200000,
             key="property_value",
@@ -159,6 +158,27 @@ def create_situation():
             "main_residential_property_purchased_is_first_home"
         ] = True
 
+    renter = st.checkbox("I am a renter")
+    if renter:
+        rent_from_council = st.checkbox("I rent from a private landlord")
+        if rent_from_council:
+            situation["households"]["household"][
+                "tenure_type"
+            ] = "RENT_FROM_COUNCIL"
+        else:
+            situation["households"]["household"][
+                "tenure_type"
+            ] = "RENT_PRIVATELY"
+        costs = st.number_input(
+            "What's your annual rent?", min_value=0, value=20_000
+        )
+        situation["households"]["household"]["rent"] = costs
+
+    else:
+        situation["households"]["household"][
+            "tenure_type"
+        ] = "OWNED_WITH_MORTGAGE"
+
     # Shift all to 2028
 
     for entity_type in situation:
@@ -166,22 +186,22 @@ def create_situation():
             for key in situation[entity_type][entity]:
                 if key != "members":
                     situation[entity_type][entity][key] = {
-                        2028: situation[entity_type][entity][key]
+                        year: situation[entity_type][entity][key]
                     }
 
     return situation
 
 
-def create_party_summary(party, situation, reform, baseline):
+def create_party_summary(party, situation, reform, baseline, year):
     simulation = Simulation(situation=situation, reform=reform)
-    simulation.default_calculation_period = 2028
+    simulation.default_calculation_period = year
 
     metrics = []
     values = []
 
     diff = (
-        lambda variable: simulation.calculate(variable, 2028).sum()
-        - baseline.calculate(variable, 2028).sum()
+        lambda variable: simulation.calculate(variable, year).sum()
+        - baseline.calculate(variable, year).sum()
     )
 
     metrics.append("Child Benefit tax charge")
@@ -205,11 +225,8 @@ def create_party_summary(party, situation, reform, baseline):
     metrics.append("Universal Credit")
     values.append(diff("universal_credit"))
 
-    metrics.append("Net change excluding in-kind spending")
-    values.append(np.array(values).sum())
-
-    metrics.append("In-kind spending")
-    values.append(diff("household_net_income") - values[-1])
+    metrics.append("Indirect impacts")
+    values.append(diff("household_net_income") - np.array(values).sum())
 
     metrics.append("Net change")
     values.append(diff("household_net_income"))
@@ -217,6 +234,8 @@ def create_party_summary(party, situation, reform, baseline):
     df = pd.DataFrame({"Metric": metrics, "Value": values})
     df["Party"] = party
     df.Value = df.Value.round(2)
+
+    df = df[::-1]
     return df
 
 
@@ -227,7 +246,7 @@ def fmt(value):
 def create_main_chart(df):
     df["Text"] = df["Value"].apply(fmt)
     fig = px.bar(
-        df.sort_values("Value", ascending=False),
+        df,
         x="Party",
         y="Value",
         text="Text",
@@ -257,22 +276,35 @@ def create_main_chart(df):
         else (LABOUR if winning_party == "Labour" else LIB_DEM)
     )
 
+    axis_range = max(df.Value.max(), -df.Value.min())
+
     fig = format_fig(fig).update_layout(
         showlegend=True,
         title=f'The <span style="color: {party_color}">{winning_party}</span> would increase your net income the most',
         yaxis_title="Net income change",
+        yaxis_range=[-axis_range, axis_range],
     )
 
     return fig
 
 
-def display_household_impact():
+def display_household_impact(year, include_indirect_impacts):
     st.subheader("Household impact")
 
-    situation = create_situation()
+    situation = create_situation(year)
 
     with st.expander("See your situation"):
         st.json(situation)
+
+    reforms = (
+        [conservative_reform, labour_reform, lib_dem_reform]
+        if include_indirect_impacts
+        else [
+            conservative_reform_direct,
+            labour_reform_direct,
+            lib_dem_reform_direct,
+        ]
+    )
 
     submit = st.button("Calculate impacts")
     if submit:
@@ -282,7 +314,9 @@ def display_household_impact():
         with st.spinner("Calculating impacts..."):
             for name, reform in zip(names, reforms):
                 dfs.append(
-                    create_party_summary(name, situation, reform, baseline)
+                    create_party_summary(
+                        name, situation, reform, baseline, year
+                    )
                 )
 
         df = pd.concat(dfs)
