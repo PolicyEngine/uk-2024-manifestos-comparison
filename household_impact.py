@@ -46,6 +46,7 @@ def create_situation(year):
         "How old are you?", min_value=0, max_value=100, value=30, key="age"
     )
     situation["people"]["you"]["age"] = age
+    situation["people"]["you"]["attends_private_school"] = False
 
     income_source = st.selectbox(
         "What's your main source of income?",
@@ -78,6 +79,7 @@ def create_situation(year):
     joint = st.checkbox("I am married or in a civil partnership")
     if joint:
         situation["people"]["your partner"] = {}
+        situation["people"]["your partner"]["attends_private_school"] = False
         situation["households"]["household"]["members"].append("your partner")
 
         age_spouse = st.number_input(
