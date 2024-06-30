@@ -11,7 +11,7 @@ st.markdown(
 )
 
 year = st.selectbox(
-    "Select a year", options=[2025, 2026, 2027, 2028], index=0, key="year"
+    "Select a year", options=[2025, 2026, 2027, 2028], index=3, key="year"
 )
 
 include_indirect_impacts = st.checkbox(
