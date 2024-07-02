@@ -2,6 +2,8 @@ import streamlit as st
 from policyengine_core.charts import *
 import pandas as pd
 import plotly.express as px
+import textwrap
+import math
 
 LABOUR = "#E4003B"
 CONSERVATIVES = "#0087DC"
@@ -168,6 +170,13 @@ def display_societal_impact(year, include_indirect_impacts, viewport_width):
             title = f"The {largest_impact_party} would increase {selected_metric_clean.lower()} the least in {year}"
     else:
         title = f"The {largest_impact_party} would decrease {selected_metric_clean.lower()} the most in {year}"
+
+
+    # Wrap title on mobile; this is hackish
+    ADJUSTMENT_FACTOR = 6
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        title_list = textwrap.wrap(title, viewport_width / ADJUSTMENT_FACTOR)
+        title = "<br>".join(title_list)
 
     metric_data = metric_data.apply(
         lambda x: (

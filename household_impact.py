@@ -7,6 +7,7 @@ import plotly.express as px
 from policyengine_core.charts import *
 from policyengine_uk import Simulation
 from streamlit_js_eval import streamlit_js_eval
+import textwrap
 
 
 # Define colors for the parties
@@ -309,9 +310,17 @@ def create_main_chart(df, viewport_width):
 
     axis_range = max(df.Value.max(), -df.Value.min())
 
+    title = f'The <span style="color: {party_color}">{winning_party}</span> would increase your net income the most'
+
+    # Wrap title on mobile; this is hackish
+    ADJUSTMENT_FACTOR = 6
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        title_list = textwrap.wrap(title, viewport_width / ADJUSTMENT_FACTOR)
+        title = "<br>".join(title_list)
+
     fig = format_fig(fig).update_layout(
         showlegend=True,
-        title=f'The <span style="color: {party_color}">{winning_party}</span> would increase your net income the most',
+        title=title,
         yaxis_title="Net income change",
         yaxis_range=[-axis_range, axis_range],
     )
