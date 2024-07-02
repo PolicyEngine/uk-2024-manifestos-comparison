@@ -56,17 +56,19 @@ def display_societal_impact(year, include_indirect_impacts, viewport_width):
     ]
 
     if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
-        plotly_x = 0
-        plotly_y = -0.2
-        plotly_yanchor = "top"
-        plotly_xanchor = "left"
-        plotly_orientation = "h"
+        x = 0
+        y = -0.2
+        yanchor = "top"
+        xanchor = "left"
+        orientation = "h"
+        margin_r = 50
     else:
-        plotly_x = 1
-        plotly_y = 1
-        plotly_yanchor = "middle"
-        plotly_xanchor = "left"
-        plotly_orientation = "v"
+        x = 1
+        y = 1
+        yanchor = "middle"
+        xanchor = "left"
+        orientation = "v"
+        margin_r = 0
 
     # Generate and display the decile impact chart
     fig_decile = (
@@ -91,11 +93,14 @@ def display_societal_impact(year, include_indirect_impacts, viewport_width):
             yaxis_tickformat="+,.0f",
             xaxis_tickvals=list(range(1, 11)),
             legend={
-              "x": plotly_x,
-              "y": plotly_y,
-              "xanchor": plotly_xanchor,
-              "yanchor": plotly_yanchor,
-              "orientation": plotly_orientation
+              "x": x,
+              "y": y,
+              "xanchor": xanchor,
+              "yanchor": yanchor,
+              "orientation": orientation
+            },
+            margin={
+                "r": margin_r
             }
         )
     )
@@ -214,11 +219,14 @@ def display_societal_impact(year, include_indirect_impacts, viewport_width):
             else "+,.0%"
         ),
         legend={
-          "x": plotly_x,
-          "y": plotly_y,
-          "xanchor": plotly_xanchor,
-          "yanchor": plotly_yanchor,
-          "orientation": plotly_orientation
+          "x": x,
+          "y": y,
+          "xanchor": xanchor,
+          "yanchor": yanchor,
+          "orientation": orientation
+        },
+        margin={
+            "r": margin_r
         }
     )
     fig = format_fig(fig)

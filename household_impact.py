@@ -253,17 +253,21 @@ def create_main_chart(df, viewport_width):
     MOBILE_WIDTH_PX = 768
 
     if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
-        plotly_x = 0
-        plotly_y = -0.2
-        plotly_yanchor = "top"
-        plotly_xanchor = "left"
-        plotly_orientation = "h"
+        x = 0
+        y = -0.2
+        yanchor = "top"
+        xanchor = "left"
+        orientation = "h"
+        margin_r = 50
+        anim_frame_y = -0.3
     else:
-        plotly_x = 1
-        plotly_y = 1
-        plotly_yanchor = "middle"
-        plotly_xanchor = "left"
-        plotly_orientation = "v"
+        x = 1
+        y = 1
+        yanchor = "middle"
+        xanchor = "left"
+        orientation = "v"
+        margin_r = 0
+        anim_frame_y = 0
 
     df["Text"] = df["Value"].apply(fmt)
     fig = px.bar(
@@ -289,12 +293,21 @@ def create_main_chart(df, viewport_width):
     # Format for viewport
     fig.update_layout(
         legend={
-          "x": plotly_x,
-          "y": plotly_y,
-          "xanchor": plotly_xanchor,
-          "yanchor": plotly_yanchor,
-          "orientation": plotly_orientation
-        }
+          "x": x,
+          "y": y,
+          "xanchor": xanchor,
+          "yanchor": yanchor,
+          "orientation": orientation,
+        },
+        margin={
+            "r": margin_r
+        },
+        updatemenus=[{
+            "y": anim_frame_y
+        }],
+        sliders=[{
+            "y": anim_frame_y
+        }]
     )
 
     winning_party = (
