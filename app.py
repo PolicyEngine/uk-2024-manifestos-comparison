@@ -6,6 +6,7 @@ import plotly.express as px
 import os
 from policyengine_core.charts import *
 import numpy as np
+from streamlit_js_eval import streamlit_js_eval
 
 # Import the decile impact function from the separate file
 from decile_impact import decile_impact
@@ -13,7 +14,10 @@ from decile_impact import decile_impact
 baseline = Microsimulation()
 # Function to calculate difference in metrics between baseline and reform
 
-
+# This expression returns None before paint, then refreshes
+# and returns the correct val - must check if val is None before using
+screen_width = streamlit_js_eval(js_expressions="window.outerWidth", key = "SCW")
+MOBILE_WIDTH_PX = 768
 
 impact_data = pd.read_csv('manifesto_impact.csv')
 
@@ -47,8 +51,29 @@ st.write("Here is a comparison of the impacts of the Conservative, Liberal Democ
 
 # Load the decile impact data from the CSV file
 reform_data = pd.read_csv('decile_impact.csv')
+print(screen_width)
 
+plotly_x = None
+plotly_y = None
+plotly_yanchor = None
 # Generate and display the decile impact chart
+if screen_width is not None and screen_width < MOBILE_WIDTH_PX:
+    plotly_x = 0.5
+    plotly_y = -0.2
+    plotly_xanchor = "center"
+    plotly_yanchor = "top"
+    plotly_orientation = "h"
+else:
+    plotly_x = 1
+    plotly_y = 1
+    plotly_xanchor = "left"
+    plotly_yanchor = "middle"
+    plotly_orientation = "v"
+
+print(plotly_x)
+print(plotly_y)
+print(plotly_yanchor)
+
 fig_decile = px.line(
     reform_data,
     x='Decile',
@@ -60,6 +85,16 @@ fig_decile = px.line(
         "Conservative": "#0087DC",
         "Labour": "#E4003B",
         "Liberal Democrat": "#FAA61A"
+    },
+)
+
+fig_decile.update_layout(
+    legend={
+      "x": plotly_x,
+      "y": plotly_y,
+      "xanchor": plotly_xanchor,
+      "yanchor": plotly_yanchor,
+      "orientation": plotly_orientation
     }
 )
 # Update y-axis range
