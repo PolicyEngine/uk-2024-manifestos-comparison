@@ -204,6 +204,13 @@ def display_societal_impact(year, include_indirect_impacts, viewport_width):
             if selected_metric_clean in ["Cost", "Taxes", "Benefits"]
             else "+,.0%"
         ),
+        legend={
+          "x": plotly_x,
+          "y": plotly_y,
+          "xanchor": plotly_xanchor,
+          "yanchor": plotly_yanchor,
+          "orientation": plotly_orientation
+        }
     )
     fig = format_fig(fig)
     st.plotly_chart(fig, use_container_width=True)
