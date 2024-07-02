@@ -6,6 +6,7 @@ from reforms import *
 import plotly.express as px
 from policyengine_core.charts import *
 from policyengine_uk import Simulation
+from streamlit_js_eval import streamlit_js_eval
 
 
 # Define colors for the parties
@@ -250,6 +251,19 @@ def create_main_chart(df, viewport_width):
     # then to the actual value, so must test if value is None before using
     MOBILE_WIDTH_PX = 768
 
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        plotly_x = 0
+        plotly_y = -0.2
+        plotly_yanchor = "top"
+        plotly_xanchor = "left"
+        plotly_orientation = "h"
+    else:
+        plotly_x = 1
+        plotly_y = 1
+        plotly_yanchor = "middle"
+        plotly_xanchor = "left"
+        plotly_orientation = "v"
+
     df["Text"] = df["Value"].apply(fmt)
     fig = px.bar(
         df,
@@ -269,6 +283,17 @@ def create_main_chart(df, viewport_width):
     fig.update_traces(
         visible="legendonly",
         selector=dict(name="Net change excluding in-kind spending"),
+    )
+
+    # Format for viewport
+    fig.update_layout(
+        legend={
+          "x": plotly_x,
+          "y": plotly_y,
+          "xanchor": plotly_xanchor,
+          "yanchor": plotly_yanchor,
+          "orientation": plotly_orientation
+        }
     )
 
     winning_party = (
