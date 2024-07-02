@@ -6,6 +6,8 @@ from reforms import *
 import plotly.express as px
 from policyengine_core.charts import *
 from policyengine_uk import Simulation
+from streamlit_js_eval import streamlit_js_eval
+import textwrap
 
 
 # Define colors for the parties
@@ -245,7 +247,28 @@ def fmt(value):
     return f"+£{value:,.0f}" if value >= 0 else f"-£{abs(value):,.0f}"
 
 
-def create_main_chart(df):
+def create_main_chart(df, viewport_width):
+    # Measure viewport width using JS; this will evaluate to None before paint,
+    # then to the actual value, so must test if value is None before using
+    MOBILE_WIDTH_PX = 768
+
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        x = 0
+        y = -0.2
+        yanchor = "top"
+        xanchor = "left"
+        orientation = "h"
+        margin_r = 50
+        anim_frame_y = -0.3
+    else:
+        x = 1
+        y = 1
+        yanchor = "middle"
+        xanchor = "left"
+        orientation = "v"
+        margin_r = 0
+        anim_frame_y = 0
+
     df["Text"] = df["Value"].apply(fmt)
     fig = px.bar(
         df,
@@ -267,6 +290,26 @@ def create_main_chart(df):
         selector=dict(name="Net change excluding in-kind spending"),
     )
 
+    # Format for viewport
+    fig.update_layout(
+        legend={
+          "x": x,
+          "y": y,
+          "xanchor": xanchor,
+          "yanchor": yanchor,
+          "orientation": orientation,
+        },
+        margin={
+            "r": margin_r
+        },
+        updatemenus=[{
+            "y": anim_frame_y
+        }],
+        sliders=[{
+            "y": anim_frame_y
+        }]
+    )
+
     winning_party = (
         df[df.Metric == "Net change"]
         .sort_values("Value", ascending=False)
@@ -280,9 +323,17 @@ def create_main_chart(df):
 
     axis_range = max(df.Value.max(), -df.Value.min())
 
+    title = f'The <span style="color: {party_color}">{winning_party}</span> would increase your net income the most'
+
+    # Wrap title on mobile; this is hackish
+    ADJUSTMENT_FACTOR = 6
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        title_list = textwrap.wrap(title, viewport_width / ADJUSTMENT_FACTOR)
+        title = "<br>".join(title_list)
+
     fig = format_fig(fig).update_layout(
         showlegend=True,
-        title=f'The <span style="color: {party_color}">{winning_party}</span> would increase your net income the most',
+        title=title,
         yaxis_title="Net income change",
         yaxis_range=[-axis_range, axis_range],
     )
@@ -290,7 +341,7 @@ def create_main_chart(df):
     return fig
 
 
-def display_household_impact(year, include_indirect_impacts):
+def display_household_impact(year, include_indirect_impacts, viewport_width):
     st.subheader("Household impact")
 
     situation = create_situation(year)
@@ -326,4 +377,4 @@ def display_household_impact(year, include_indirect_impacts):
         with st.expander("See breakdown"):
             st.dataframe(df, use_container_width=True)
 
-        st.plotly_chart(create_main_chart(df), use_container_width=True)
+        st.plotly_chart(create_main_chart(df, viewport_width), use_container_width=True)

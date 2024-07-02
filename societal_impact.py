@@ -2,13 +2,15 @@ import streamlit as st
 from policyengine_core.charts import *
 import pandas as pd
 import plotly.express as px
+import textwrap
+import math
 
 LABOUR = "#E4003B"
 CONSERVATIVES = "#0087DC"
 LIB_DEM = "#FAA61A"
 
 
-def display_societal_impact(year, include_indirect_impacts):
+def display_societal_impact(year, include_indirect_impacts, viewport_width):
     results_df = pd.read_csv("manifesto_impact.csv")
     results_df = results_df[
         results_df["Includes indirect impacts"] == include_indirect_impacts
@@ -37,6 +39,11 @@ def display_societal_impact(year, include_indirect_impacts):
 
     display_df_year = display_df
     result_df_year = result_df
+
+    # Measure viewport width using JS; this will evaluate to None before paint,
+    # then to the actual value, so must test if value is None before using
+    MOBILE_WIDTH_PX = 768
+
     # Display comparison table using the DataFrame
     st.subheader("Societal Impacts")
     st.write(
@@ -47,6 +54,21 @@ def display_societal_impact(year, include_indirect_impacts):
     decile_data = decile_data[decile_data.Year == year][
         decile_data["Includes indirect impacts"] == include_indirect_impacts
     ]
+
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        x = 0
+        y = -0.2
+        yanchor = "top"
+        xanchor = "left"
+        orientation = "h"
+        margin_r = 50
+    else:
+        x = 1
+        y = 1
+        yanchor = "middle"
+        xanchor = "left"
+        orientation = "v"
+        margin_r = 0
 
     # Generate and display the decile impact chart
     fig_decile = (
@@ -70,6 +92,16 @@ def display_societal_impact(year, include_indirect_impacts):
         .update_layout(
             yaxis_tickformat="+,.0f",
             xaxis_tickvals=list(range(1, 11)),
+            legend={
+              "x": x,
+              "y": y,
+              "xanchor": xanchor,
+              "yanchor": yanchor,
+              "orientation": orientation
+            },
+            margin={
+                "r": margin_r
+            }
         )
     )
     # Update y-axis range
@@ -144,6 +176,13 @@ def display_societal_impact(year, include_indirect_impacts):
     else:
         title = f"The {largest_impact_party} would decrease {selected_metric_clean.lower()} the most in {year}"
 
+
+    # Wrap title on mobile; this is hackish
+    ADJUSTMENT_FACTOR = 6
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        title_list = textwrap.wrap(title, viewport_width / ADJUSTMENT_FACTOR)
+        title = "<br>".join(title_list)
+
     metric_data = metric_data.apply(
         lambda x: (
             np.float32(x / 1e9).round(1)
@@ -179,6 +218,16 @@ def display_societal_impact(year, include_indirect_impacts):
             if selected_metric_clean in ["Cost", "Taxes", "Benefits"]
             else "+,.0%"
         ),
+        legend={
+          "x": x,
+          "y": y,
+          "xanchor": xanchor,
+          "yanchor": yanchor,
+          "orientation": orientation
+        },
+        margin={
+            "r": margin_r
+        }
     )
     fig = format_fig(fig)
     st.plotly_chart(fig, use_container_width=True)

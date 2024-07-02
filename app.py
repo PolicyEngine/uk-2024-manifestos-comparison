@@ -2,7 +2,13 @@ import streamlit as st
 from policyengine_core.charts import *
 from household_impact import display_household_impact
 from societal_impact import display_societal_impact
+from streamlit_js_eval import streamlit_js_eval
 
+
+# Measure viewport width using JS; this will evaluate to None before paint,
+# then to the actual value, so must test if value is None before using
+MOBILE_WIDTH_PX = 768
+viewport_width = streamlit_js_eval(js_expressions="window.outerWidth", key = "WOW")
 
 # Streamlit code for displaying the data
 st.title("UK 2024 Election Manifestos")
@@ -24,7 +30,7 @@ include_indirect_impacts = st.checkbox(
 tab1, tab2 = st.tabs(["Societal Impacts", "Household Impacts"])
 
 with tab1:
-    display_societal_impact(year, include_indirect_impacts)
+    display_societal_impact(year, include_indirect_impacts, viewport_width)
 
 with tab2:
-    display_household_impact(year, include_indirect_impacts)
+    display_household_impact(year, include_indirect_impacts, viewport_width)

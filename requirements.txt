@@ -2,3 +2,4 @@ streamlit
 policyengine_uk
 pandas
 plotly
+streamlit_js_eval
