@@ -13,7 +13,7 @@ LABOUR = "#E4003B"
 CONSERVATIVE = "#0087DC"
 LIB_DEM = "#FAA61A"
 
-names = ["The Conservatives", "Labour", "The Liberal Democrats"]
+names = ["Conservatives", "Labour", "Liberal Democrats"]
 
 
 TAX_RISES = [
@@ -254,9 +254,9 @@ def create_main_chart(df):
         text="Text",
         color="Party",
         color_discrete_map={
-            "The Conservatives": CONSERVATIVE,
+            "Conservatives": CONSERVATIVE,
             "Labour": LABOUR,
-            "The Liberal Democrats": LIB_DEM,
+            "Liberal Democrats": LIB_DEM,
         },
         animation_frame="Metric",
     )
@@ -274,7 +274,7 @@ def create_main_chart(df):
     )
     party_color = (
         CONSERVATIVE
-        if winning_party == "The Conservatives"
+        if winning_party == "Conservatives"
         else (LABOUR if winning_party == "Labour" else LIB_DEM)
     )
 
