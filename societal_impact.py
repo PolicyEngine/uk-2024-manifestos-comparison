@@ -2,14 +2,13 @@ import streamlit as st
 from policyengine_core.charts import *
 import pandas as pd
 import plotly.express as px
-from streamlit_js_eval import streamlit_js_eval
 
 LABOUR = "#E4003B"
 CONSERVATIVES = "#0087DC"
 LIB_DEM = "#FAA61A"
 
 
-def display_societal_impact(year, include_indirect_impacts):
+def display_societal_impact(year, include_indirect_impacts, viewport_width):
     results_df = pd.read_csv("manifesto_impact.csv")
     results_df = results_df[
         results_df["Includes indirect impacts"] == include_indirect_impacts
@@ -42,7 +41,6 @@ def display_societal_impact(year, include_indirect_impacts):
     # Measure viewport width using JS; this will evaluate to None before paint,
     # then to the actual value, so must test if value is None before using
     MOBILE_WIDTH_PX = 768
-    viewport_width = streamlit_js_eval(js_expressions="window.outerWidth", key = "WOW")
 
     # Display comparison table using the DataFrame
     st.subheader("Societal Impacts")

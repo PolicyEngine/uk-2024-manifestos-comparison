@@ -245,7 +245,11 @@ def fmt(value):
     return f"+£{value:,.0f}" if value >= 0 else f"-£{abs(value):,.0f}"
 
 
-def create_main_chart(df):
+def create_main_chart(df, viewport_width):
+    # Measure viewport width using JS; this will evaluate to None before paint,
+    # then to the actual value, so must test if value is None before using
+    MOBILE_WIDTH_PX = 768
+
     df["Text"] = df["Value"].apply(fmt)
     fig = px.bar(
         df,
@@ -290,7 +294,7 @@ def create_main_chart(df):
     return fig
 
 
-def display_household_impact(year, include_indirect_impacts):
+def display_household_impact(year, include_indirect_impacts, viewport_width):
     st.subheader("Household impact")
 
     situation = create_situation(year)
@@ -326,4 +330,4 @@ def display_household_impact(year, include_indirect_impacts):
         with st.expander("See breakdown"):
             st.dataframe(df, use_container_width=True)
 
-        st.plotly_chart(create_main_chart(df), use_container_width=True)
+        st.plotly_chart(create_main_chart(df, viewport_width), use_container_width=True)
