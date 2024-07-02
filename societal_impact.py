@@ -2,6 +2,7 @@ import streamlit as st
 from policyengine_core.charts import *
 import pandas as pd
 import plotly.express as px
+from streamlit_js_eval import streamlit_js_eval
 
 LABOUR = "#E4003B"
 CONSERVATIVES = "#0087DC"
@@ -37,6 +38,10 @@ def display_societal_impact(year, include_indirect_impacts):
 
     display_df_year = display_df
     result_df_year = result_df
+
+    MOBILE_WIDTH_PX = 768
+    viewport_width = streamlit_js_eval(js_expressions="window.outerWidth", key = "WOW")
+
     # Display comparison table using the DataFrame
     st.subheader("Societal Impacts")
     st.write(
