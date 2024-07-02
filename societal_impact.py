@@ -39,6 +39,8 @@ def display_societal_impact(year, include_indirect_impacts):
     display_df_year = display_df
     result_df_year = result_df
 
+    # Measure viewport width using JS; this will evaluate to None before paint,
+    # then to the actual value, so must test if value is None before using
     MOBILE_WIDTH_PX = 768
     viewport_width = streamlit_js_eval(js_expressions="window.outerWidth", key = "WOW")
 
@@ -52,6 +54,19 @@ def display_societal_impact(year, include_indirect_impacts):
     decile_data = decile_data[decile_data.Year == year][
         decile_data["Includes indirect impacts"] == include_indirect_impacts
     ]
+
+    if viewport_width is not None and viewport_width < MOBILE_WIDTH_PX:
+        plotly_x = 0
+        plotly_y = -0.2
+        plotly_yanchor = "top"
+        plotly_xanchor = "left"
+        plotly_orientation = "h"
+    else:
+        plotly_x = 1
+        plotly_y = 1
+        plotly_yanchor = "middle"
+        plotly_xanchor = "left"
+        plotly_orientation = "v"
 
     # Generate and display the decile impact chart
     fig_decile = (
@@ -75,6 +90,13 @@ def display_societal_impact(year, include_indirect_impacts):
         .update_layout(
             yaxis_tickformat="+,.0f",
             xaxis_tickvals=list(range(1, 11)),
+            legend={
+              "x": plotly_x,
+              "y": plotly_y,
+              "xanchor": plotly_xanchor,
+              "yanchor": plotly_yanchor,
+              "orientation": plotly_orientation
+            }
         )
     )
     # Update y-axis range
