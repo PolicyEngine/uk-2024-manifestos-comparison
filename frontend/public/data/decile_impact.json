@@ -1,0 +1,1682 @@
+[
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": -2.1244433584402884,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": -0.6925637082855653,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": -0.3554242890351431,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": -0.18844938995048158,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": 0.0386177456318253,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 0.2556424283619961,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 0.41477190762872795,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 0.48344095421289673,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 0.4914680067790838,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.2615891883553421,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": 2.195274692568424,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 0.6256528278589463,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 0.43171524655986826,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 0.2266420797482579,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 0.12209804159622052,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": 0.05917612871065603,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": -0.02770126481903432,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": -0.11371928290903692,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": -0.28167990360469697,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": -1.1296584114799875,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 10.43378266103221,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 5.152805364276128,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 2.9476056938528785,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 2.587723611632101,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.5928541980470974,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.36692601083384857,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": -0.1782630578666149,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.8033229710285962,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": -0.6798520202905171,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -2.190024276712724,
+    "year": 2025,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": -5.007078752680802,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": -1.6379424975837762,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": -0.9968819291403525,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": -0.7110913630091518,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": -0.3719920857215392,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": -0.043977977843123336,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 0.21045714822103467,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 0.6916960159002634,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 1.192081201603819,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.34267255107704747,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": 2.155563236658572,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 0.6246348319859711,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 0.4323156769466831,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 0.20774175595087008,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 0.1811656740645708,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": 0.008882764220124895,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": -0.050945925094077575,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": -0.06104271795743699,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": -0.2677093595181485,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": -1.0269365069820755,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 9.445801254324662,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 4.616903206082221,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 3.091716379138039,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 2.5654066250552514,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.7220082957348468,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.3847973633589472,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": -0.26166374020100375,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.5325659337713609,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": -0.795861194948605,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -2.134832150223065,
+    "year": 2026,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": -7.7622364729515505,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": -2.2831975114897753,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": -1.361804800367417,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": -0.9412091567250364,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": -0.31443331597515795,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 0.21652408313485183,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 0.6858147967912004,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 1.1996597710742625,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 1.6122312446228741,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.5270064910286958,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": 2.3405697605540583,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 0.6647188489017654,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 0.42803223881303104,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 0.18132603040811388,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 0.1880115239780926,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": -0.007369098102538042,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": -0.0261864763946733,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": -0.09557132220529094,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": -0.2562101500927112,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": -1.0048624660889145,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 10.415317564504795,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 4.396244703675791,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 2.8536102260622838,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 3.0869770322883245,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.7826868441539114,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.31520418439280373,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": -0.19872505971356935,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.6427041007698877,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": -0.6140032645777318,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -2.199809935080436,
+    "year": 2027,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": -8.252526654205242,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": -2.4456922768276392,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": -1.385966657519163,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": -1.0194399067732338,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": -0.3564508388368414,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 0.17674624452197182,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 0.6679107850275735,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 1.1399674424942328,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 1.5878293428048684,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.4707425291732098,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": 2.358201083245843,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 0.6528858777585057,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 0.4113196467087028,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 0.19300387180735526,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 0.12113102334214991,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": 0.02114730378966524,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": -0.0037478844527303297,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": -0.10463175645788408,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": -0.2690236360803214,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": -0.9922569771850844,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 10.666058208410622,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 4.311217793555465,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 2.9290637141990326,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 3.006323681277101,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.7642512948210847,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.24821529213628732,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": -0.11978106015975089,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.6811680685270155,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": -0.6254178656263846,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -2.2731485139353342,
+    "year": 2028,
+    "includesIndirectImpacts": true
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": 0.5603366194144462,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": 0.21596813076497223,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": 0.3090293988449932,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": 0.384389596188895,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": 0.4565658944925639,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 0.5985944168169833,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 0.7155726873242633,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 0.7693457870970714,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 0.7014861795312515,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.45235110033874326,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": -0.0,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 0.7630018618259438,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 1.8712072431638633,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 1.1589363750774393,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 1.6890872296949972,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.0111509637609382,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.22956752333395639,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": 0.18275065715425948,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.013011370190295433,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": 0.010161908482836844,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -0.8521461981932028,
+    "year": 2025,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": 0.7731546923513878,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": 0.33540523206509065,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": 0.4322414726092542,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": 0.4720992052238417,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": 0.5392111816023498,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 0.6828343807644187,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 0.7961761654252195,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 1.1832611700440858,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 1.5960131483596887,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.6284196252761548,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": -3.4141008969802953e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 1.787787121239005e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 2.4545633623541327e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 3.3545405216583544e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 3.7303157037081017e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": 4.40261981242298e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": 5.0882876341022495e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": 4.033619144075668e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": 4.0509440693628724e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": 4.558359200261728e-06,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 0.21857551961400962,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 1.386299980380277,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 1.3125696969988772,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 1.6563482921116857,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.2553940592425585,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.33307897951918936,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": 0.15567806334874817,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.007675079804934082,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": 0.00017853621856489093,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -0.9364668950879333,
+    "year": 2026,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": 1.0065684834790347,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": 0.5061653869225293,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": 0.6750446953467647,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": 0.7587595499119572,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": 0.9495960387689752,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 1.2549217753170598,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 1.4850587070112036,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 1.8966341009600616,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 2.121186938717157,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.9103214478593455,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": -5.343757169644486e-07,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 1.591628417461269e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 2.6149687550279053e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 4.62543308339275e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 3.823753315869937e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": 5.182803589762417e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": 5.030082032784443e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": 4.068442139637959e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": 4.823622297865653e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": 5.285070723980673e-06,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 0.349940693845466,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 1.1556259563093978,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 1.1694977274421279,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 2.0559204667331317,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.2589302574544636,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.32990647028175746,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": 0.14355411798028936,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.020596587145160543,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": 0.012053726858740977,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -1.0204946168745064,
+    "year": 2027,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 1,
+    "relativeIncomeChange": 1.307809817600921,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 2,
+    "relativeIncomeChange": 0.6215499879339687,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 3,
+    "relativeIncomeChange": 0.8560703067720683,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 4,
+    "relativeIncomeChange": 0.8593128886196519,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 5,
+    "relativeIncomeChange": 1.074259157365619,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 6,
+    "relativeIncomeChange": 1.3464718943405867,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 7,
+    "relativeIncomeChange": 1.5599190522536146,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 8,
+    "relativeIncomeChange": 1.951954478891078,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 9,
+    "relativeIncomeChange": 2.1773981120632495,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Conservatives",
+    "decile": 10,
+    "relativeIncomeChange": 0.9260379324976525,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 1,
+    "relativeIncomeChange": -1.3262765849081846e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 2,
+    "relativeIncomeChange": 1.7408377812921263e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 3,
+    "relativeIncomeChange": 2.7788675042415556e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 4,
+    "relativeIncomeChange": 4.084312761000818e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 5,
+    "relativeIncomeChange": 4.258030870643927e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 6,
+    "relativeIncomeChange": 5.454060870229391e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 7,
+    "relativeIncomeChange": 4.862345612514705e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 8,
+    "relativeIncomeChange": 3.733417857395503e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 9,
+    "relativeIncomeChange": 4.451001657528078e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Labour Party",
+    "decile": 10,
+    "relativeIncomeChange": 4.000367477933253e-06,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 1,
+    "relativeIncomeChange": 0.47696519465367704,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 2,
+    "relativeIncomeChange": 1.1268863452486562,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 3,
+    "relativeIncomeChange": 1.2460990223380077,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 4,
+    "relativeIncomeChange": 1.969489852782735,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 5,
+    "relativeIncomeChange": 1.3120894748032317,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 6,
+    "relativeIncomeChange": 0.2510699103038289,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 7,
+    "relativeIncomeChange": 0.15212681963808652,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 8,
+    "relativeIncomeChange": -0.02195405051035444,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 9,
+    "relativeIncomeChange": 0.0014988337468119647,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  },
+  {
+    "reform": "Liberal Democrats",
+    "decile": 10,
+    "relativeIncomeChange": -1.114096270426011,
+    "year": 2028,
+    "includesIndirectImpacts": false
+  }
+]
