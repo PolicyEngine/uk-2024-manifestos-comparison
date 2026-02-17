@@ -4,7 +4,7 @@ app = modal.App("uk-manifestos-comparison")
 
 image = (
     modal.Image.debian_slim(python_version="3.11")
-    .pip_install("policyengine-uk==2.22.0", "numpy<2")
+    .pip_install("fastapi[standard]", "policyengine-uk==2.22.0", "numpy<2")
 )
 
 
