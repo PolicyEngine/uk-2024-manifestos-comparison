@@ -25,7 +25,7 @@ import {
 import { partyColors } from "../designTokens";
 import type { HouseholdResult } from "../types";
 
-const API_URL = import.meta.env.VITE_API_URL || "";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 const INCOME_SOURCES = [
   { value: "None", label: "None" },
@@ -76,7 +76,7 @@ export default function HouseholdImpacts({ year, includeIndirect }: Props) {
   const handleCalculate = async () => {
     if (!API_URL) {
       setError(
-        "Household impact calculations require a backend API. Set VITE_API_URL to enable.",
+        "Household impact calculations require a backend API. Set NEXT_PUBLIC_API_URL to enable.",
       );
       return;
     }
