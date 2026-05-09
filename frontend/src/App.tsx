@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import {
   MantineProvider,
@@ -9,7 +11,6 @@ import {
   Tabs,
   Stack,
 } from "@mantine/core";
-import "@mantine/core/styles.css";
 import SocietalImpacts from "./components/SocietalImpacts";
 import HouseholdImpacts from "./components/HouseholdImpacts";
 import { colors, fonts } from "./designTokens";
