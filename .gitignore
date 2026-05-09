@@ -163,6 +163,12 @@ cython_debug/
 
 # Node
 node_modules/
-frontend/dist/
+dist/
+.next/
+out/
+build/
+coverage/
 .vercel/
-
+.turbo/
+next-env.d.ts
+.vercel/
