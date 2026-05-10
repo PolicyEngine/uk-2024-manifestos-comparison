@@ -6,7 +6,7 @@ export function useManifestoData() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/data/manifesto_impact.json")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/manifesto_impact.json`)
       .then((r) => r.json())
       .then((d: ManifestoImpact[]) => {
         setData(d);
@@ -22,7 +22,7 @@ export function useDecileData() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/data/decile_impact.json")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/data/decile_impact.json`)
       .then((r) => r.json())
       .then((d: DecileImpact[]) => {
         setData(d);
