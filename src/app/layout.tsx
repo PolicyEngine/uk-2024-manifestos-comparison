@@ -1,3 +1,6 @@
+import { PolicyEngineShell } from "@policyengine/ui-kit/layout";
+import "@policyengine/ui-kit/styles.css";
+
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
@@ -47,7 +50,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PolicyEngineShell country="uk">{children}        </PolicyEngineShell>
+      </body>
     </html>
   );
 }

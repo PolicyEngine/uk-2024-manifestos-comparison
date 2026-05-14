@@ -13,7 +13,7 @@
     "@emotion/react": "^11.14.0",
     "@mantine/core": "^8.3.14",
     "@mantine/hooks": "^8.3.14",
-    "@policyengine/ui-kit": "^0.9.0",
+    "@policyengine/ui-kit": "^0.12.0",
     "next": "^16.2.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
