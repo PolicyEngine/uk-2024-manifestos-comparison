@@ -5,7 +5,9 @@ import Script from 'next/script';
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-const SITE_URL = 'https://uk-2024-manifestos-comparison.vercel.app';
+// The canonical address: policyengine.org serves this app through a zone
+// rewrite, so links and link previews name it, not the Vercel deployment.
+const SITE_URL = 'https://policyengine.org/uk/2024-manifestos';
 const TITLE = 'UK 2024 manifestos comparison | PolicyEngine';
 const DESCRIPTION =
   'Compare the societal and household-level impacts of the Conservative, Labour and Liberal Democrat 2024 UK election manifestos.';
